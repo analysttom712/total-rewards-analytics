@@ -1,0 +1,6 @@
+faker
+pandas
+pyarrow
+duckdb
+pytest
+ruff

@@ -1,0 +1,34 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# dbt
+target/
+dbt_packages/
+logs/
+
+# Local warehouse
+warehouse/*.duckdb
+warehouse/*.duckdb.wal
+
+# Secrets
+.env
+*.pem
+profiles.yml
+.aws/
+
+# Power BI local caches
+*.pbix.bak
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated data (regenerate from the seed; only data/sample/ is committed)
+data/raw/
+data/large/
