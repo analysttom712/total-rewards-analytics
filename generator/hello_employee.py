@@ -1,5 +1,8 @@
-"""Print ten fake Northwind Mutual employees."""
+"""Print 25 fake Northwind Mutual employees and create a dataframe for them."""
 
+from pathlib import Path
+
+import pandas as pd
 from faker import Faker
 from job_catalog import JOBS
 
@@ -28,11 +31,12 @@ def make_employee(employee_id: int) -> dict:
 
 
 employees = []
-for employee_id in range(100001, 100011):
+for employee_id in range(100001, 100026):
     employees.append(make_employee(employee_id))
-print(len(employees))
-print(employees[0])
-print(employees[-1])
-
-for employee in employees:
-    print(employee)
+df = pd.DataFrame(employees)
+df["hire_date"] = pd.to_datetime(df["hire_date"])
+print(df.head())
+print(df.shape)
+print(df.dtypes)
+Path("data/raw").mkdir(parents=True, exist_ok=True)
+df.to_csv("data/raw/employees.csv", index=False)
