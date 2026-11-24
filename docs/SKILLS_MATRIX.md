@@ -4,11 +4,11 @@
 
 | Skill | Rating | Last updated | Note |
 |---|---|---|---|
-| Git basics (commit, branch, push) | 1 | 2026-11-22 | First branch, commits, amend, push. Branch-vs-main model not solid yet (quiz) |
-| GitHub flow (issues, PRs, review) | 1 | 2026-11-22 | First issue → PR → merge with guidance; `Closes #N` purpose not yet clear |
-| Python basics | 1 | 2026-11-22 | First script: imports, variables, f-strings, Faker seed, with partial-code hints; R/tidyverse background |
+| Git basics (commit, branch, push) | 1 | 2026-11-23 | Branch-vs-main now understood; switch vs `switch -c` and `branch -d` learned by fixing typo branches |
+| GitHub flow (issues, PRs, review) | 1 | 2026-11-23 | Opened and merged PR #5 himself; `gh pr create --fill` left out `Closes #1` again |
+| Python basics | 2 | 2026-11-23 | Wrote a list of dicts, own-module import and dict lookups with hints; wired salary-in-range ahead of the step |
 | pandas | 0 | | |
-| pytest / ruff | 1 | 2026-11-22 | Read and fixed first ruff error (I001) with help; no pytest yet |
+| pytest / ruff | 1 | 2026-11-23 | Read F401 and F821 with explanation and fixed F821; no pytest yet |
 | SQL joins & aggregation | 2 | | |
 | SQL CTEs & window functions | 1 | | |
 | Effective-dated / as-of logic | 2 | | Familiar from HR reporting |
@@ -20,4 +20,4 @@
 | AWS IAM / S3 / Glue / Athena | 0 | | |
 | PySpark | 0 | | |
 | Fabric (lakehouse, KQL) | 0 | | Optional, Phase 7 |
-| Troubleshooting / incident response | 0 | | Drills start Phase 1 wk 3 |
+| Troubleshooting / incident response | 1 | 2026-11-23 | Read IndexError, NameError, pathspec and branch errors bottom-up with help. Drills start Phase 1 wk 3 |
