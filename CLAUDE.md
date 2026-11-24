@@ -162,7 +162,7 @@ Biggest table at `standard`: `payroll_results`, about 1.4M rows (1,500 × 78 per
 
 ## 4. How every session runs (the "workday")
 
-Thomas starts with `/standup` and ends with `/wrap`. If he forgets, run the standup steps yourself when the session opens.
+Thomas starts with `/standup` and ends with `/wrap`. If he forgets, run the standup steps yourself when the session opens. `/quiz [topic]` runs a 5-question check any time (spaced review + today's topic + one cert question, asked one at a time).
 
 **Session shape (~2 hours):**
 1. **Standup (5 min):** read `docs/LEARNING_LOG.md` and `git log -5`. State: yesterday, today's ticket, any blocker.

@@ -2,9 +2,10 @@
 
 Commands and patterns I've used so far, grouped by when I need them. Updated at each `/wrap`.
 
----
+Click a section to open it. In VS Code's preview (Ctrl+Shift+V) and on GitHub, each one expands.
 
-## Short `PS>` prompt (for screenshots)
+<details>
+<summary><b>Short <code>PS></code> prompt (for screenshots)</b></summary>
 
 The normal prompt shows the full folder path, which includes my Windows username. Hide it before any screenshot that goes public.
 
@@ -29,9 +30,10 @@ python generator/hello_employee.py
 
 The short prompt only lasts in the terminal where I typed it. Every new terminal starts with the normal prompt.
 
----
+</details>
 
-## Start of session
+<details>
+<summary><b>Start of session</b></summary>
 
 ```powershell
 cd <repo folder>                     # open the repo in a terminal
@@ -46,7 +48,10 @@ If activation is blocked by PowerShell's execution policy:
 Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 ```
 
-## Work on a ticket (GitHub flow)
+</details>
+
+<details>
+<summary><b>Work on a ticket (GitHub flow)</b></summary>
 
 ```powershell
 gh issue list                        # see open tickets
@@ -61,7 +66,10 @@ git branch -d <branch-name>          # delete a branch (only if it's safe)
 - A **branch** is a sticky note pointing at a commit. Committing on a branch moves only that note. `main` stays put until the PR is merged.
 - Work in the editor, **save the file**, then check in the terminal.
 
-## Run and check code
+</details>
+
+<details>
+<summary><b>Run and check code</b></summary>
 
 ```powershell
 python generator/hello_employee.py   # run a script
@@ -75,7 +83,10 @@ pip install -r requirements.txt      # install packages listed in requirements
 - `ruff check` = **linter** (finds mistakes). `ruff format` = **formatter** (tidies layout). Passing ruff ≠ correct code: it checks grammar, not meaning.
 - Format only the files your ticket touched, so the PR stays about one thing.
 
-## Ship it
+</details>
+
+<details>
+<summary><b>Ship it</b></summary>
 
 ```powershell
 git status                           # check: no secrets, no data files, right files only
@@ -92,9 +103,10 @@ gh pr merge <N> --merge --delete-branch  # merge and clean up the branch
 - `Closes #N` in the PR links the PR to the ticket and closes the ticket when the PR merges, so anyone can trace why a change was made.
 - Fix the last commit message (before pushing): `git commit --amend`
 
----
+</details>
 
-## Python basics
+<details>
+<summary><b>Python basics</b></summary>
 
 | Python | R | Power Query |
 |---|---|---|
@@ -122,7 +134,10 @@ plans[-1]                      # last row
 - Inside an f-string that uses `"`, use `'` for dict keys: `f"Job: {row['job_title']}"`.
 - f-strings: `print(f"Salary: ${salary:,}")` → `Salary: $120,000`
 
-## Functions
+</details>
+
+<details>
+<summary><b>Functions</b></summary>
 
 ```python
 def annual_premium(monthly: int) -> int:
@@ -146,7 +161,10 @@ annual_premium(480)    # 5760
 - Don't overwrite a parameter inside the function (`employee_id = 100001` would give every employee the same ID).
 - Values that already exist in a row are pulled out, not re-made: `job_row["grade"]`.
 
-## Loops and range
+</details>
+
+<details>
+<summary><b>Loops and range</b></summary>
 
 ```python
 range(5, 8)            # 5, 6, 7   ← the stop number is LEFT OUT
@@ -169,7 +187,10 @@ for employee in employees:                         # loop over the rows, singula
 - Indented lines repeat; the first unindented line runs once, after the loop.
 - List → look up by **position** `employees[0]`; dict → by **name** `employees[0]["name"]`.
 
-## pandas DataFrames
+</details>
+
+<details>
+<summary><b>pandas DataFrames</b></summary>
 
 A DataFrame is a real table: Power Query table = R tibble = pandas DataFrame.
 
@@ -240,7 +261,10 @@ df.to_csv("data/raw/employees.csv", index=False)      # index=False = no junk 0,
 
 **VS Code:** Rainbow CSV extension (mechatroner) colors each column; `Align` in the status bar lines them up.
 
-## Faker and seeds
+</details>
+
+<details>
+<summary><b>Faker and seeds</b></summary>
 
 ```python
 from faker import Faker
@@ -252,7 +276,10 @@ fake.date_between(start_date="-10y", end_date="today")
 
 Faker also has `random_element` and `random_int`. Look them up when the ticket needs them.
 
-## Reading errors
+</details>
+
+<details>
+<summary><b>Reading errors</b></summary>
 
 - Read **bottom-up**. The last line is the error type and reason, e.g. `IndexError: ...`.
 - Above it are the file and line number where the error happened.
@@ -267,7 +294,10 @@ Faker also has `random_element` and `random_int`. Look them up when the ticket n
 - git `pathspec ... did not match any files` → that file doesn't exist (not created/saved, or misspelled).
 - git `a branch named 'x' already exists` → drop the `-c`.
 
-## Gotchas I've hit
+</details>
+
+<details>
+<summary><b>Gotchas I've hit</b></summary>
 
 - Terminal vs. editor vs. GitHub website: know which one you're in.
 - File not saved, or saved in the wrong folder → the script runs old code or "file not found".
@@ -276,10 +306,15 @@ Faker also has `random_element` and `random_int`. Look them up when the ticket n
 - Rename a variable everywhere: click it in VS Code, press **F2**, type the new name.
 - `end_date="today"` moves every day, so a seed only reproduces the same data within one day (fix in #9).
 
-## VS Code layout
+</details>
+
+<details>
+<summary><b>VS Code layout</b></summary>
 
 - Terminal on the right: right-click the **TERMINAL** tab → **Panel Position → Right**.
 - Terminal beside a file: Ctrl+Shift+P → `Terminal: Create New Terminal in Editor Area to the Side`.
 - This cheatsheet as a reading pane: open `docs/CHEATSHEET.md`, press **Ctrl+K** then **V** (preview to the side).
 - **Ctrl + `** jumps between code and terminal. A new terminal needs `.\.venv\Scripts\Activate.ps1`.
 - Short prompt for screenshots: `function prompt { "PS> " }` (lasts for that terminal only).
+
+</details>
