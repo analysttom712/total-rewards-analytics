@@ -1,0 +1,7 @@
+{
+  // Open every Markdown file in the formatted preview (clickable drop-downs).
+  // To edit one: right-click its tab → "Reopen Editor With..." → "Text Editor".
+  "workbench.editorAssociations": {
+    "*.md": "vscode.markdown.preview.editor"
+  }
+}

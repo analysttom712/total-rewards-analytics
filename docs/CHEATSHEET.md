@@ -1,11 +1,218 @@
 # Cheatsheet
 
-Commands and patterns I've used so far, grouped by when I need them. Updated at each `/wrap`.
+Commands and patterns, organized by the day I learned them. Updated at each `/wrap`.
 
-Click a section to open it. In VS Code's preview (Ctrl+Shift+V) and on GitHub, each one expands.
+Click a day to open it, then click a topic. Works in VS Code's preview (Ctrl+Shift+V) and on GitHub. Terms and symbols: see `docs/GLOSSARY.md`.
 
 <details>
-<summary><b>Short <code>PS></code> prompt (for screenshots)</b></summary>
+<summary><b>⚡ Every session (quick reference)</b></summary>
+
+**Start:**
+```powershell
+.\.venv\Scripts\Activate.ps1         # turn on the venv; prompt shows (.venv)
+git switch main                      # go to main
+git pull                             # get anything merged on GitHub
+git status                           # what's changed?
+gh issue list                        # open tickets
+git switch -c <issue#>-<short-name>  # new branch for the ticket
+```
+
+**Check:**
+```powershell
+python generator/hello_employee.py
+ruff check generator
+ruff format --check generator
+```
+
+**Ship:**
+```powershell
+git status
+git add <file>
+git commit -m "What changed"
+git push -u origin <branch-name>
+gh pr create --title "..." --body "Closes #N. ..."
+gh pr merge <N> --merge --delete-branch
+```
+
+</details>
+
+---
+
+<details>
+<summary><b>Day 1 · Nov 22 · Project skeleton + first fake employee</b></summary>
+
+<details>
+<summary>Start of session</summary>
+
+```powershell
+cd <repo folder>                     # open the repo in a terminal
+.\.venv\Scripts\Activate.ps1         # turn on the venv; prompt shows (.venv)
+git switch main                      # go to main
+git pull                             # get anything merged on GitHub
+git status                           # what's changed? (run this a lot)
+```
+
+If activation is blocked by PowerShell's execution policy:
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+
+</details>
+
+<details>
+<summary>Work on a ticket (GitHub flow)</summary>
+
+```powershell
+gh issue list                        # see open tickets
+git switch -c <issue#>-<short-name>  # create a new branch, e.g. 1-job-catalog
+```
+
+- A **branch** is a sticky note pointing at a commit. Committing on a branch moves only that note. `main` stays put until the PR is merged.
+- Work in the editor, **save the file**, then check in the terminal.
+
+</details>
+
+<details>
+<summary>Run and check code</summary>
+
+```powershell
+python generator/hello_employee.py   # run a script
+ruff check generator                 # lint; fix anything it reports
+ruff check generator --fix           # let ruff fix the simple ones (e.g. import order)
+pip install -r requirements.txt      # install packages listed in requirements
+```
+
+</details>
+
+<details>
+<summary>Ship it</summary>
+
+```powershell
+git status                           # check: no secrets, no data files, right files only
+git add <file>                       # stage (or `git add .` after checking status)
+git commit -m "Short description of what changed"
+git push -u origin <branch-name>     # first push of a new branch
+gh pr create                         # open the PR
+```
+
+- `Closes #N` in the PR links the PR to the ticket and closes the ticket when the PR merges, so anyone can trace why a change was made.
+- Fix the last commit message (before pushing): `git commit --amend`
+
+</details>
+
+<details>
+<summary>First Python script: Faker and seeds</summary>
+
+```python
+from faker import Faker
+Faker.seed(42)       # same seed → same fake data every run
+fake = Faker()
+fake.first_name(), fake.last_name()
+fake.date_between(start_date="-10y", end_date="today")
+```
+
+- f-strings: `print(f"Salary: ${salary:,}")` → `Salary: $120,000`
+
+</details>
+
+<details>
+<summary>Reading errors (the basics)</summary>
+
+- Read **bottom-up**. The last line is the error type and reason, e.g. `IndexError: ...`.
+- Above it are the file and line number where the error happened.
+
+</details>
+
+<details>
+<summary>Gotchas</summary>
+
+- Terminal vs. editor vs. GitHub website: know which one you're in.
+- File not saved, or saved in the wrong folder → the script runs old code or "file not found".
+- `.gitkeep` only exists so Git tracks an empty folder. It has nothing to do with branches.
+
+</details>
+
+</details>
+
+<details>
+<summary><b>Day 2 · Nov 23 · Job catalog: lists and dicts (#1)</b></summary>
+
+<details>
+<summary>Branches: create vs go to vs delete</summary>
+
+```powershell
+git switch -c <issue#>-<short-name>  # CREATE a new branch
+git switch <branch-name>             # GO TO a branch that already exists (no -c)
+git branch                           # list branches; * marks where I am
+git branch -d <branch-name>          # delete a branch (only if it's safe)
+```
+
+- Each `git switch -c` with a typo makes another new branch. Use `-c` once, then drop it.
+
+</details>
+
+<details>
+<summary>PRs: fix the body, merge</summary>
+
+```powershell
+gh pr edit <N> --body "Closes #1. ..."   # add/fix the PR body after the fact
+gh pr merge <N> --merge --delete-branch  # merge and clean up the branch
+```
+
+- `gh pr create --fill` copies the commit message as the title and leaves the **body empty**, so there's no `Closes #N`. Add it.
+
+</details>
+
+<details>
+<summary>Lists and dicts</summary>
+
+| Python | R | Power Query |
+|---|---|---|
+| list `[a, b, c]`: by position | vector / `list()` | `{a, b, c}` |
+| dict `{"key": value}`: by name | named list | record `[key = value]` |
+| list of dicts: rows with named fields | data frame | table |
+
+```python
+plans = [
+    {"plan_code": "MED-PPO", "monthly_premium": 650},
+    {"plan_code": "MED-HDHP", "monthly_premium": 480},
+]
+len(plans)                     # 2
+plans[0]                       # first row (Python counts from 0!)
+plans[0]["monthly_premium"]    # 650
+plans[-1]                      # last row
+```
+
+- `plans[2]` here → `IndexError: list index out of range`. The last valid position is `len(plans) - 1`.
+- Import from my own file in the same folder: `from plans import PLANS` (constants in ALL_CAPS).
+- One row = one dict; text in quotes, numbers without quotes or commas (`100000`, not `100,000`).
+
+</details>
+
+<details>
+<summary>Faker: pick a row, pick a number</summary>
+
+- Pick a random row (seeded): `row = fake.random_element(JOBS)`, then `row["job_title"]`.
+- Whole number in a range (seeded): `fake.pyint(min_value=..., max_value=...)` (or `fake.random_int(min, max)`).
+- Order matters with a seed: each `fake.` call takes the next number, so moving a call changes everything after it.
+- Inside an f-string that uses `"`, use `'` for dict keys: `f"Job: {row['job_title']}"`.
+
+</details>
+
+<details>
+<summary>Reading errors</summary>
+
+- `NameError: name 'x' is not defined` → the variable doesn't exist (typo, or renamed in one place only).
+- `ImportError: cannot import name 'X'` → the file was found but has no `X` in it.
+- ruff `F401` = imported but unused (finish the code; don't `--fix` away an import you're about to use).
+- ruff `F821` = undefined name (same as NameError, caught before running).
+- git `pathspec ... did not match any files` → that file doesn't exist (not created/saved, or misspelled).
+- git `a branch named 'x' already exists` → drop the `-c`.
+
+</details>
+
+<details>
+<summary>Short <code>PS></code> prompt (for screenshots)</summary>
 
 The normal prompt shows the full folder path, which includes my Windows username. Hide it before any screenshot that goes public.
 
@@ -33,111 +240,20 @@ The short prompt only lasts in the terminal where I typed it. Every new terminal
 </details>
 
 <details>
-<summary><b>Start of session</b></summary>
+<summary>Gotchas</summary>
 
-```powershell
-cd <repo folder>                     # open the repo in a terminal
-.\.venv\Scripts\Activate.ps1         # turn on the venv; prompt shows (.venv)
-git switch main                      # go to main
-git pull                             # get anything merged on GitHub
-git status                           # what's changed? (run this a lot)
-```
+- A passing `ruff check` on an empty file proves nothing: check that the file has content (size 0 = not saved).
+- Rename a variable everywhere: click it in VS Code, press **F2**, type the new name.
 
-If activation is blocked by PowerShell's execution policy:
-```powershell
-Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
-```
+</details>
 
 </details>
 
 <details>
-<summary><b>Work on a ticket (GitHub flow)</b></summary>
-
-```powershell
-gh issue list                        # see open tickets
-git switch -c <issue#>-<short-name>  # CREATE a new branch, e.g. 1-job-catalog
-git switch <branch-name>             # GO TO a branch that already exists (no -c)
-git branch                           # list branches; * marks where I am
-git branch -d <branch-name>          # delete a branch (only if it's safe)
-```
-
-- Each `git switch -c` with a typo makes another new branch. Use `-c` once, then drop it.
-
-- A **branch** is a sticky note pointing at a commit. Committing on a branch moves only that note. `main` stays put until the PR is merged.
-- Work in the editor, **save the file**, then check in the terminal.
-
-</details>
+<summary><b>Day 3 · Nov 24 · Functions and loops (#2), first DataFrame (#3)</b></summary>
 
 <details>
-<summary><b>Run and check code</b></summary>
-
-```powershell
-python generator/hello_employee.py   # run a script
-ruff check generator                 # lint; fix anything it reports
-ruff check generator --fix           # let ruff fix the simple ones (e.g. import order)
-ruff format generator/<file>.py      # FORMATTER: fix spacing/quotes/layout (doesn't change behavior)
-ruff format --check generator        # preview what format would change, without changing it
-pip install -r requirements.txt      # install packages listed in requirements
-```
-
-- `ruff check` = **linter** (finds mistakes). `ruff format` = **formatter** (tidies layout). Passing ruff ≠ correct code: it checks grammar, not meaning.
-- Format only the files your ticket touched, so the PR stays about one thing.
-
-</details>
-
-<details>
-<summary><b>Ship it</b></summary>
-
-```powershell
-git status                           # check: no secrets, no data files, right files only
-git add <file>                       # stage (or `git add .` after checking status)
-git commit -m "Short description of what changed"
-git push -u origin <branch-name>     # first push of a new branch
-gh pr create --title "..." --body "Closes #N. ..."   # open the PR; Closes #N goes in the BODY
-gh pr edit <N> --body "Closes #1. ..."   # add/fix the PR body after the fact
-gh pr merge <N> --merge --delete-branch  # merge and clean up the branch
-```
-
-- `gh pr create --fill` copies the commit message as the title and leaves the **body empty**, so there's no `Closes #N`. Add it.
-
-- `Closes #N` in the PR links the PR to the ticket and closes the ticket when the PR merges, so anyone can trace why a change was made.
-- Fix the last commit message (before pushing): `git commit --amend`
-
-</details>
-
-<details>
-<summary><b>Python basics</b></summary>
-
-| Python | R | Power Query |
-|---|---|---|
-| list `[a, b, c]`: by position | vector / `list()` | `{a, b, c}` |
-| dict `{"key": value}`: by name | named list | record `[key = value]` |
-| list of dicts: rows with named fields | data frame | table |
-
-```python
-plans = [
-    {"plan_code": "MED-PPO", "monthly_premium": 650},
-    {"plan_code": "MED-HDHP", "monthly_premium": 480},
-]
-len(plans)                     # 2
-plans[0]                       # first row (Python counts from 0!)
-plans[0]["monthly_premium"]    # 650
-plans[-1]                      # last row
-```
-
-- `plans[2]` here → `IndexError: list index out of range`. The last valid position is `len(plans) - 1`.
-- Import from my own file in the same folder: `from plans import PLANS` (constants in ALL_CAPS).
-- One row = one dict; text in quotes, numbers without quotes or commas (`100000`, not `100,000`).
-- Pick a random row (seeded): `row = fake.random_element(JOBS)`, then `row["job_title"]`.
-- Whole number in a range (seeded): `fake.pyint(min_value=..., max_value=...)` (or `fake.random_int(min, max)`).
-- Order matters with a seed: each `fake.` call takes the next number, so moving a call changes everything after it.
-- Inside an f-string that uses `"`, use `'` for dict keys: `f"Job: {row['job_title']}"`.
-- f-strings: `print(f"Salary: ${salary:,}")` → `Salary: $120,000`
-
-</details>
-
-<details>
-<summary><b>Functions</b></summary>
+<summary>Functions</summary>
 
 ```python
 def annual_premium(monthly: int) -> int:
@@ -164,7 +280,7 @@ annual_premium(480)    # 5760
 </details>
 
 <details>
-<summary><b>Loops and range</b></summary>
+<summary>Loops and range</summary>
 
 ```python
 range(5, 8)            # 5, 6, 7   ← the stop number is LEFT OUT
@@ -190,7 +306,33 @@ for employee in employees:                         # loop over the rows, singula
 </details>
 
 <details>
-<summary><b>pandas DataFrames</b></summary>
+<summary>ruff: linter vs formatter</summary>
+
+```powershell
+ruff format generator/<file>.py      # FORMATTER: fix spacing/quotes/layout (doesn't change behavior)
+ruff format --check generator        # preview what format would change, without changing it
+```
+
+- `ruff check` = **linter** (finds mistakes). `ruff format` = **formatter** (tidies layout). Passing ruff ≠ correct code: it checks grammar, not meaning.
+- Format only the files your ticket touched, so the PR stays about one thing.
+
+</details>
+
+<details>
+<summary>PRs that close the ticket</summary>
+
+```powershell
+gh pr create --title "..." --body "Closes #N. ..."   # Closes #N goes in the BODY
+```
+
+- Exact form: `Closes #12` (no extra words between). `Fixes #12` and `Resolves #12` work too.
+- The title is free text for humans; it doesn't close anything.
+- The issue closes when the PR **merges** into `main`.
+
+</details>
+
+<details>
+<summary>pandas DataFrames</summary>
 
 A DataFrame is a real table: Power Query table = R tibble = pandas DataFrame.
 
@@ -241,7 +383,11 @@ df["hire_date"] = pd.to_datetime(df["hire_date"])   # pick column → convert �
 df["hire_date"].dt.strftime("%m-%d-%Y")   # → text, loses the date type; do this last
 ```
 
-**Write a CSV:**
+</details>
+
+<details>
+<summary>Write a CSV and import order</summary>
+
 ```python
 from pathlib import Path
 
@@ -251,6 +397,7 @@ df.to_csv("data/raw/employees.csv", index=False)      # index=False = no junk 0,
 - `to_csv` won't create folders; `mkdir` does. `parents=True` = make every level; `exist_ok=True` = don't crash if it's already there.
 - Paths are relative to where you **run** the script from (the repo root).
 - Generated data (`data/raw/`) is git-ignored: the code + seed are the source, not the file.
+- Close the CSV in Excel before re-running: Windows locks open files (`PermissionError`).
 
 **Import order** (ruff `I001`): three groups, blank line between:
 1. built into Python: `from pathlib import Path`
@@ -259,62 +406,123 @@ df.to_csv("data/raw/employees.csv", index=False)      # index=False = no junk 0,
 
 `import x` lines before `from x import y` lines. `ruff check generator --fix` sorts it.
 
-**VS Code:** Rainbow CSV extension (mechatroner) colors each column; `Align` in the status bar lines them up.
-
 </details>
 
 <details>
-<summary><b>Faker and seeds</b></summary>
+<summary>Reading errors</summary>
 
-```python
-from faker import Faker
-Faker.seed(42)       # same seed → same fake data every run
-fake = Faker()
-fake.first_name(), fake.last_name()
-fake.date_between(start_date="-10y", end_date="today")
-```
-
-Faker also has `random_element` and `random_int`. Look them up when the ticket needs them.
-
-</details>
-
-<details>
-<summary><b>Reading errors</b></summary>
-
-- Read **bottom-up**. The last line is the error type and reason, e.g. `IndexError: ...`.
-- Above it are the file and line number where the error happened.
-- `NameError: name 'x' is not defined` → the variable doesn't exist (typo, or renamed in one place only).
-- `ImportError: cannot import name 'X'` → the file was found but has no `X` in it.
-- ruff `F401` = imported but unused (finish the code; don't `--fix` away an import you're about to use).
-- ruff `F821` = undefined name (same as NameError, caught before running).
 - ruff `F841` = assigned but never used (made inside a function but never returned).
 - `invalid-syntax` → fix the **first** error first; later ones are often knock-ons.
 - `AttributeError: 'int' object has no attribute 'append'` → you're calling a list method on a number (name reused, or typo like `apend`).
 - `TypeError: list indices must be integers ... not str` → asked a list for a column name; pick a row first: `employees[0]["name"]`.
-- git `pathspec ... did not match any files` → that file doesn't exist (not created/saved, or misspelled).
-- git `a branch named 'x' already exists` → drop the `-c`.
 
 </details>
 
 <details>
-<summary><b>Gotchas I've hit</b></summary>
+<summary>Git: undo an uncommitted change, park work</summary>
 
-- Terminal vs. editor vs. GitHub website: know which one you're in.
-- File not saved, or saved in the wrong folder → the script runs old code or "file not found".
-- `.gitkeep` only exists so Git tracks an empty folder. It has nothing to do with branches.
-- A passing `ruff check` on an empty file proves nothing: check that the file has content (size 0 = not saved).
-- Rename a variable everywhere: click it in VS Code, press **F2**, type the new name.
+```powershell
+git restore <file>                   # throw away uncommitted edits; back to the last commit
+git commit --amend -m "Fixed message"   # fix the last commit message (only before pushing)
+```
+
+- Untracked and uncommitted files follow you when you switch branches. Commit (or park) them on the right branch first.
+
+</details>
+
+<details>
+<summary>VS Code layout and extensions</summary>
+
+- Terminal on the right: right-click the **TERMINAL** tab → **Panel Position → Right**.
+- Terminal beside a file: Ctrl+Shift+P → `Terminal: Create New Terminal in Editor Area to the Side`.
+- This cheatsheet as a reading pane: open `docs/CHEATSHEET.md`, press **Ctrl+Shift+V** (or **Ctrl+K** then **V** for preview to the side).
+- **Ctrl + `** jumps between code and terminal. A new terminal needs `.\.venv\Scripts\Activate.ps1`.
+- Hide the minimap: **View → Appearance → Minimap**.
+- Rainbow CSV extension (mechatroner) colors each column; `Align` in the status bar lines them up.
+
+</details>
+
+<details>
+<summary>Gotchas</summary>
+
 - `end_date="today"` moves every day, so a seed only reproduces the same data within one day (fix in #9).
 
 </details>
 
-<details>
-<summary><b>VS Code layout</b></summary>
+</details>
 
-- Terminal on the right: right-click the **TERMINAL** tab → **Panel Position → Right**.
-- Terminal beside a file: Ctrl+Shift+P → `Terminal: Create New Terminal in Editor Area to the Side`.
-- This cheatsheet as a reading pane: open `docs/CHEATSHEET.md`, press **Ctrl+K** then **V** (preview to the side).
-- **Ctrl + `** jumps between code and terminal. A new terminal needs `.\.venv\Scripts\Activate.ps1`.
-- Short prompt for screenshots: `function prompt { "PS> " }` (lasts for that terminal only).
+<details>
+<summary><b>Day 3 review · Nov 24 · Deep review session</b></summary>
+
+<details>
+<summary>Where am I typing?</summary>
+
+| Place | What it's for | How to tell | Like… |
+|---|---|---|---|
+| **Editor** (VS Code file tabs) | Writing and saving files | File name on the tab; ● = unsaved | Power Query's Advanced Editor |
+| **Terminal** (bottom panel) | **Running** commands: `python`, `git`, `ruff`, `gh` | `(.venv) PS C:\...>` | Clicking Refresh: it runs things |
+| **GitHub website** | The shared copy: PRs, issues, review | A browser at github.com | The Power BI Service |
+
+Rule: **write in the editor → save → run in the terminal → share on GitHub.**
+
+</details>
+
+<details>
+<summary>The Python REPL (scratchpad)</summary>
+
+```powershell
+python           # start it; the prompt becomes >>>
+```
+```python
+exit()           # leave it; back to PS>
+```
+
+- **REPL** = Read, Evaluate, Print, Loop. Type one line, see the answer. Nothing is saved; you can't break anything. Like the R console or VBA's Immediate window.
+- `>>>` = ready for a new line. `...` = "your last line isn't finished". **Ctrl + C** cancels it (prints `KeyboardInterrupt`).
+
+</details>
+
+<details>
+<summary>Quotes, names and types</summary>
+
+```python
+"salary"          # 'salary'  → a string literal: the TEXT s-a-l-a-r-y
+salary            # NameError → a name: Python looks up what's stored under it
+salary = 104572   # assignment: store 104572 under the name salary
+salary            # 104572
+type(salary)      # <class 'int'>  whole number
+type("salary")    # <class 'str'>  text
+```
+
+- **Quotes = "take this literally". No quotes = "go look it up".** Excel: `="Total"` vs `=Total` (`#NAME?` = Python's `NameError`).
+- Quotes come in **pairs**: `"salary` → `SyntaxError: unterminated string literal`.
+- `"salary"` and `'salary'` are the same value; Python *displays* text with single quotes.
+- `int` and `str` are the same types pandas shows as `int64` and `str` in `df.dtypes`.
+
+</details>
+
+<details>
+<summary>The Git pipeline (one picture)</summary>
+
+```
+ EDITOR              STAGING             LOCAL HISTORY        GITHUB              MAIN
+ (working folder)    ("the batch")       (your commits)       (origin)            (the trusted copy)
+ you edit + save  →  git add        →    git commit      →    git push       →    PR → review → merge
+ "modified"          "to be committed"   "a posted entry"     "uploaded"          "Closes #N fires here"
+```
+
+| Stage | Command | Accounting version |
+|---|---|---|
+| Edit and save | (VS Code, Ctrl+S) | Drafting journal entries |
+| Stage | `git add <file>` | Selecting which entries go in this batch |
+| Commit | `git commit -m "..."` | Posting the batch, with a description |
+| Push | `git push` | Sending the posted batch to the shared ledger |
+| PR → merge | `gh pr create` → `gh pr merge` | Review and approval, then it's in the official books (`main`) |
+
+- A **branch** is your own ledger copy. Nothing reaches `main` until a PR merges it.
+- `Closes #N` (in the PR **body**) closes the issue at the **merge** step, not before.
+- `git status` tells you which stage every changed file is in. Run it before every `git add` and every commit.
+
+</details>
 
 </details>
