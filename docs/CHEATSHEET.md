@@ -525,4 +525,100 @@ type("salary")    # <class 'str'>  text
 
 </details>
 
+<details>
+<summary>Staging and unstaging, hands-on</summary>
+
+```powershell
+git add docs/GLOSSARY.md docs/COACHING.md   # name files, separated by spaces (not commas)
+git restore --staged docs/GLOSSARY.md       # out of the batch, edits kept
+git restore generator/hello_employee.py     # ⚠️ throws away uncommitted edits
+```
+
+- `git add .` stages everything in the folder. Naming files is safer: you see exactly what goes in.
+- `restore --staged` sends a file back to its state **before** `git add` (new file → Untracked, edited file → Modified).
+- `git status` headings are **states**, not files: all 11 staged files sat under one heading.
+- `nothing to commit, working tree clean` = everything's committed.
+
+</details>
+
+<details>
+<summary>Push, PR, merge</summary>
+
+```powershell
+git push -u origin learning-loop
+```
+```powershell
+gh pr merge --squash --delete-branch
+```
+```powershell
+git switch main; git pull
+```
+
+- `-u` links the branch to GitHub on the first push; after that, plain `git push`.
+- `origin` = your GitHub copy. `HEAD` = the branch you're on.
+- In the push output, read `[new branch]` and `set up to track`; skip the "objects" lines.
+- Open the PR with `gh pr create --title "..." --body "..."`.
+
+</details>
+
+<details>
+<summary>Lists vs dicts: lookups and their errors</summary>
+
+```python
+jobs[1]["job_title"]   # row first (position), then column (key)
+jobs[-1]               # last row
+```
+
+| You type | Error | Meaning |
+|---|---|---|
+| `jobs[3]` (3 rows) | `IndexError` | no such **position** |
+| `jobs["grade"]` | `TypeError` | a list needs a number, not text |
+| `jobs[0]["salary"]` | `KeyError` | no such **key** in that row |
+
+- `[1]` is a position, never a value inside the row.
+
+</details>
+
+<details>
+<summary>Functions: return vs print, apply once</summary>
+
+```python
+def annual_premium(monthly: int) -> int:
+    return monthly * 12           # hands the value back
+
+premiums = []
+for monthly in [650, 480, 75]:
+    premiums.append(annual_premium(monthly))   # [7800, 5760, 900]
+```
+
+- `print` shows a value and hands back `None`: a card visual. `return` hands it back: a measure.
+- `annual_premium(monthly * 12)` multiplies twice (93,600). Transform once.
+
+</details>
+
+<details>
+<summary>pandas: quick checks</summary>
+
+```python
+df.shape                                            # (rows, columns)
+df.dtypes                                           # ignore the last "dtype: object" line
+df["effective"] = pd.to_datetime(df["effective"])   # str → datetime64[us]
+df["annual_premium"] = df["monthly_premium"] * 12   # vectorized: no loop
+print(df.to_csv(index=False))                       # preview the CSV text
+```
+
+- pandas 3 calls text columns `str` (older notes say `object`).
+
+</details>
+
+<details>
+<summary>Gotchas</summary>
+
+- Check **which file** you're typing in before writing practice code.
+- Paste into the REPL with **right-click**, not Ctrl+V (`U+0016`).
+- Grey ghost text = AI autocomplete. Press **Esc** during practice.
+- A box marked `text` is a diagram, not a command.
+
+</details>
+
 </details>

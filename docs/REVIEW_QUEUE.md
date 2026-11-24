@@ -18,20 +18,24 @@ Rules: ask due items oldest-first, misses before new items, at most 3 review que
 
 | Concept | Box | Last seen | Result | Misses | Next due | Where taught |
 |---|---|---|---|---|---|---|
-| `range(a, b)` stops before `b`; stop − start = count | 1 | 2026-11-24 | ½ | 2 | 2026-11-25 | Day 3 |
-| `Closes #N`: exact form (`Closes #12`), goes in the PR body, closes on merge | 1 | 2026-11-24 | ½ | 3 | 2026-11-25 | Day 1–3 |
-| `object` dtype = type unknown; `pd.to_datetime` = "Changed Type" | 1 | 2026-11-24 | ✗ | 1 | 2026-11-25 | Day 3 |
-| `to_csv(index=False)`: why (no junk index column) | 1 | 2026-11-24 | ½ | 1 | 2026-11-25 | Day 3 |
-| `return`: Python needs it, R doesn't | 1 | 2026-11-24 | ✗ | 1 | 2026-11-25 | Day 3 |
-| List by position `[0]` vs dict by name `["name"]` | 1 | 2026-11-24 | ✗ | 1 | 2026-11-25 | Day 3 |
-| `git switch` (go to) vs `git switch -c` (create) | 1 | 2026-11-23 | ½ | 1 | 2026-11-25 | Day 2 |
-| `.gitkeep` = lets Git track an empty folder | 1 | 2026-11-22 | ✗ | 1 | 2026-11-25 | Day 1 |
+| `range(a, b)` stops before `b`; stop − start = count | 2 | 2026-11-24 | ✓ | 2 | 2026-11-26 | Day 3 |
+| `Closes #N`: exact form (`Closes #12`), goes in the PR body, closes on merge | 2 | 2026-11-24 | ✓ | 3 | 2026-11-26 | Day 1–3 |
+| `object` / `str` dtype (text, pandas 3 says `str`); `pd.to_datetime` = "Changed Type" | 2 | 2026-11-24 | ✓ | 1 | 2026-11-26 | Day 3 |
+| `to_csv(index=False)`: why (no junk index column) | 2 | 2026-11-24 | ✓ | 1 | 2026-11-26 | Day 3 |
+| `return`: Python needs it, R doesn't; `print` shows, `return` hands back (else `None`) | 1 | 2026-11-24 | ✗ | 2 | 2026-11-25 | Day 3 + review |
+| List by position `[0]` vs dict by name `["name"]` (position ≠ value inside) | 1 | 2026-11-24 | ½ | 1 | 2026-11-25 | Day 3 + review |
+| `git switch` (go to) vs `git switch -c` (create) | 2 | 2026-11-24 | ✓ | 1 | 2026-11-26 | Day 2 |
+| `.gitkeep` = lets Git track an empty folder | 2 | 2026-11-24 | ✓ | 1 | 2026-11-26 | Day 1 |
 | Import groups: built-in / pip / my files | 1 | 2026-11-24 | new | 0 | 2026-11-25 | Day 3 |
 | `Path(...).mkdir(parents=True, exist_ok=True)` | 1 | 2026-11-24 | new | 0 | 2026-11-25 | Day 3 |
 | Store dates as ISO `YYYY-MM-DD`; MM-DD-YYYY is display | 1 | 2026-11-24 | new | 0 | 2026-11-25 | Day 3 |
+| `git add` is a snapshot: a file can be staged **and** modified at once | 1 | 2026-11-24 | ½ | 1 | 2026-11-25 | Day 3 review |
+| `git restore --staged` (unstage, keep edits) vs `git restore` (discard edits) | 1 | 2026-11-24 | new | 0 | 2026-11-25 | Day 3 review |
+| Lookup errors: `IndexError` (position) / `KeyError` (key) / `TypeError` (wrong kind) | 1 | 2026-11-24 | new | 0 | 2026-11-25 | Day 3 review |
+| Apply a transform once (`annual_premium(monthly)`, not `(monthly * 12)`) | 1 | 2026-11-24 | ✗ | 1 | 2026-11-25 | Day 3 review |
 | Type hints: input inside `()`, output after `->` | 2 | 2026-11-24 | ✓ | 1 | 2026-11-26 | Day 3 |
 | Branch vs `main`: commits on a branch don't change `main` | 2 | 2026-11-23 | ✓ | 1 | 2026-11-25 | Day 1–2 |
-| Lists count from 0; `[-1]` = last | 2 | 2026-11-23 | ✓ | 0 | 2026-11-25 | Day 2 |
+| Lists count from 0; `[-1]` = last | 3 | 2026-11-24 | ✓ | 0 | 2026-11-28 | Day 2 |
 | Seed: same order of random calls → same output | 2 | 2026-11-23 | ✓ | 0 | 2026-11-25 | Day 2 |
 | Higher grade → higher pay range (no inversions) | 2 | 2026-11-24 | ✓ | 0 | 2026-11-26 | Day 2 |
 
