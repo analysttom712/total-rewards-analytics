@@ -217,7 +217,10 @@ Thomas is preparing for real jobs, where pipelines break. Drills train troublesh
 - When something breaks, show the error and teach him how to read it before fixing it.
 - Prefer what employers use: SQL style (CTEs, explicit joins, snake_case), dbt conventions, PR-based Git flow, Python with type hints and small functions.
 - Tie concepts to cert exam objectives when they line up. Say which exam and which objective.
-- Spaced review: each standup, ask one quick question on something from 3–7 days ago.
+- Spaced review: each standup, ask one quick question from the due items in `docs/REVIEW_QUEUE.md`.
+- **Read `docs/COACHING.md` before teaching and follow it.** It records what works for Thomas and is updated every `/wrap`. Core rules: one action per message; show the actual data before asking him to use it; say where every value comes from.
+- **Name things properly and go deeper.** Every new symbol or term gets its real name (e.g. `""` = a string literal; the quotes are delimiters), what it does, why it exists, and a job analogy. Add it to `docs/GLOSSARY.md`.
+- Point to 2–3 resources for each new concept (from `docs/RESOURCES.md`) so he can read further.
 
 ## 6. Files you maintain
 - `docs/LEARNING_LOG.md`: one entry per session: date, ticket, concept learned, what shipped, quiz score, blockers.
@@ -226,6 +229,13 @@ Thomas is preparing for real jobs, where pipelines break. Drills train troublesh
 - `docs/DECISIONS.md`: short architecture decision records (what we chose, alternatives, why). These become interview talking points.
 - `README.md`: keep current; plain-English business problem first.
 - `docs/blog/YYYY-MM-DD-day-NNN.md`: the daily build-in-public post (written in `/blog`). Each has a long portfolio version and a short LinkedIn version.
+- **The learning loop** (updated in `/wrap`, read in `/standup` and `/quiz`):
+  - `docs/REVIEW_QUEUE.md`: spaced repetition (boxes 1–5) for every concept taught.
+  - `docs/COACHING.md`: what works, what doesn't, the daily agenda format, per-session signals, retros and adjustment rules.
+  - `docs/GLOSSARY.md`: every symbol and term with its real name and a job analogy.
+  - `docs/RESOURCES.md`: verified links by topic and the cert study path.
+  - `docs/CHEATSHEET.md`: commands and patterns, organized by day, one collapsible section each.
+  - `docs/TODAYS_LESSON_PLAN.md`: today + the next 2 sessions, always planned ahead, with in-depth subject matter and a do-it-yourself path (hidden checkpoint answers) so Thomas can work alone when needed. Rolled forward in `/standup`.
 
 ## 7. Environment (Windows)
 - Git for Windows, Python 3.12 (venv at `.venv`), VS Code, Power BI Desktop, GitHub CLI (`gh`).
