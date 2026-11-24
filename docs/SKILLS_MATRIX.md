@@ -4,10 +4,10 @@
 
 | Skill | Rating | Last updated | Note |
 |---|---|---|---|
-| Git basics (commit, branch, push) | 1 | 2026-11-23 | Branch-vs-main now understood; switch vs `switch -c` and `branch -d` learned by fixing typo branches |
-| GitHub flow (issues, PRs, review) | 1 | 2026-11-24 | PR #10 closed #2 via `Closes #2` (command given); quiz shows where it goes isn't solid yet |
-| Python basics | 2 | 2026-11-24 | Functions with type hints and `return`, `for` loops, list building with hints; wrote the `return` dict ahead of the step. `range()` and naming still shaky |
-| pandas | 0 | | |
+| Git basics (commit, branch, push) | 2 | 2026-11-24 | Named each file's state from `git status`; staged, unstaged (`restore --staged`), committed and pushed the learning-loop work himself with hints |
+| GitHub flow (issues, PRs, review) | 2 | 2026-11-24 | Opened and merged PR #15 (command given); explained why `Closes #N` fires at merge, not push |
+| Python basics | 2 | 2026-11-24 | Predicted list/dict lookups and their errors; wrote the append loop after a partial-code hint. `print` vs `return` and applying ×12 once still shaky |
+| pandas | 2 | 2026-11-24 | Built a DataFrame → CSV (#3) with help; in review predicted `shape`, dtypes, the `to_datetime` result and a vectorized column on his own |
 | pytest / ruff | 1 | 2026-11-24 | Read F841/F821/invalid-syntax with help; first `ruff format`. No pytest yet (#9) |
 | SQL joins & aggregation | 2 | | |
 | SQL CTEs & window functions | 1 | | |
@@ -20,4 +20,4 @@
 | AWS IAM / S3 / Glue / Athena | 0 | | |
 | PySpark | 0 | | |
 | Fabric (lakehouse, KQL) | 0 | | Optional, Phase 7 |
-| Troubleshooting / incident response | 1 | 2026-11-24 | Followed AttributeError and TypeError to the line and cause with help; noticed the error moving lines = progress. Drills start Phase 1 wk 3 |
+| Troubleshooting / incident response | 1 | 2026-11-24 | Predicted `IndexError`/`TypeError`/`KeyError` before running; `CommandNotFoundException` and `U+0016` read with help. Drills start Phase 1 wk 3 |

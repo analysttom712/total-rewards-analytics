@@ -22,11 +22,11 @@ Slow down and consolidate everything from Days 1–3 so Issue #9 (testing) feels
 | Block | Time | Status |
 |---|---|---|
 | 1. Where am I typing? + Python REPL + quotes | 10 min | ✅ done |
-| 2. The Git pipeline | 20 min | ▶ in progress |
-| 3. Python building blocks: lists vs dicts | 20 min | |
-| 4. Functions and loops | 20 min | |
-| 5. pandas and CSV | 15 min | |
-| 6. `/quiz` on everything | 10 min | |
+| 2. The Git pipeline | 20 min | ✅ done |
+| 3. Python building blocks: lists vs dicts | 20 min | ✅ done |
+| 4. Functions and loops | 20 min | ✅ done |
+| 5. pandas and CSV | 15 min | ✅ done |
+| 6. `/quiz` on everything | 10 min | ✅ done (3.5/5) |
 
 </details>
 
@@ -235,10 +235,10 @@ Branch vs main · `git switch` vs `-c` · `.gitkeep` · `Closes #N` · lists fro
 <details>
 <summary>✅ Done when</summary>
 
-- [ ] You can name a file's Git state from `git status` without the table
-- [ ] Block 3–5 checkpoints answered (right or wrong, you tried first)
-- [ ] `/quiz` run and the review queue updated
-- [ ] Learning-loop PR shipped
+- [x] You can name a file's Git state from `git status` without the table
+- [x] Block 3–5 checkpoints answered (right or wrong, you tried first)
+- [x] `/quiz` run and the review queue updated
+- [x] Learning-loop PR shipped
 
 </details>
 

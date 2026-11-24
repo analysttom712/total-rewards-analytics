@@ -22,6 +22,9 @@ Every symbol and term I've met, with its **real name**, what it does, and what i
 | `->` | **return annotation** | In `def f(x: int) -> dict:`, says what type the function hands back. | The output data type of a custom function. |
 | `.` | **attribute access** | `df.shape`, `fake.first_name()`: "the thing that belongs to". | `Table.RowCount(...)` style namespacing. |
 | `,` (trailing) | **trailing comma** | Allowed after the last item; makes adding the next item a one-line change. | — |
+| `>>>` / `...` | **REPL prompt** / **continuation prompt** | `>>>` waits for a new line of Python. `...` means "this block isn't finished": press Enter on an empty `...` line to run it. | A formula bar waiting for Enter. |
+| `x = f(...)` vs `f(...)` | **assignment** vs **call** | `annual_premium = (...)` *stores* a value under that name; `annual_premium(monthly)` *runs* the function. Inside `append( )` you want the call. | Naming a step vs invoking a function. |
+| `:=` | **walrus operator** (assignment expression) | Assigns *and* returns a value in one go. Seen once from autocomplete; not needed yet. | — |
 
 </details>
 
@@ -50,6 +53,10 @@ Every symbol and term I've met, with its **real name**, what it does, and what i
 | **standard library** | Modules built into Python (e.g. `pathlib`); nothing to install. | Built-in Excel functions. |
 | **third-party package** | Installed with `pip` from `requirements.txt` (pandas, Faker). | A custom visual from AppSource. |
 | **`None`** | Python's "no value". | `null` in M; blank in DAX. |
+| **vectorized** | Math applied to a whole column at once: `df["monthly_premium"] * 12`. No loop. | A Power Query custom column; a DAX calculated column. |
+| **`IndexError`** | Asked for a **position** that doesn't exist (`jobs[3]` in a 3-item list). | A row number past the end of the table. |
+| **`KeyError`** | Asked a dict for a **key** it doesn't have (`row["salary"]`). | A column name that isn't in the table. |
+| **`TypeError`** | The wrong **kind** of value for the operation (`jobs["grade"]`: a list needs a number, not text). | Text in a numeric column. |
 | **seed** | A starting number that makes "random" output repeat exactly. | A saved filter state you can reapply. |
 | **deterministic** | Same input → same output, every time. | A refresh that always ties out. |
 
@@ -64,7 +71,9 @@ Every symbol and term I've met, with its **real name**, what it does, and what i
 | **column** / **Series** | One column of a DataFrame. | A column. |
 | **index** | Row labels pandas adds (0, 1, 2…). Not a data column. | The row numbers in the Power Query preview. |
 | **dtype** | A column's data type: `int64`, `str`, `datetime64`, `object`. | The ABC/123/calendar icon on a column header. |
-| **`object` dtype** | "Type unknown" / mixed. Needs a type step. | ABC123 (Any). |
+| **`object` / `str` dtype** | Text, or "type unknown". pandas 3 labels text columns `str`; older pandas said `object`. Needs a type step if it should be a date or number. | ABC123 (Any) / ABC (Text). |
+| **`datetime64[us]`** | A real date-time column. `[us]` = microsecond precision (µs). | The calendar icon on a Power Query column. |
+| **`dtype: object`** (last line of `df.dtypes`) | Describes the printed list of type names itself, not your data. Ignore it. | A report footer. |
 | **`pd.to_datetime`** | Convert a column to a date type. | "Changed Type" → Date. |
 | **`df.head()` / `df.shape` / `df.dtypes`** | First 5 rows / (rows, columns) / each column's type. | Preview / row and column count / column types. |
 | **CSV** | Comma-separated values: plain-text table, one row per line. | Excel's "CSV (Comma delimited)". |
@@ -93,6 +102,12 @@ Every symbol and term I've met, with its **real name**, what it does, and what i
 | **`.gitkeep`** | Empty placeholder file so Git tracks an empty folder (Git ignores empty folders). | — |
 | **amend** | Rewrite the last commit (only before pushing). | Correcting an unposted entry. |
 | **`git restore`** | Throw away uncommitted edits to a file; back to the last commit. | Undo to last save. |
+| **`git restore --staged`** | Take a file **out of the batch** (unstage). Edits are kept. | Pulling a timecard out of the approval batch. |
+| **staged + modified** | `git add` takes a **snapshot**; edit again and the file shows in both sections. `git add` again to update. | The batch holds the old timecard after the employee corrects hours. |
+| **working tree clean** | Every file matches the last commit; nothing to add or commit. | All entries posted. |
+| **upstream** (`-u`) | The GitHub branch your local branch is linked to. After `push -u`, plain `git push` works. `[gone]` = its GitHub copy was deleted. | The SharePoint file your local copy syncs to. |
+| **`HEAD`** | "The branch/commit I'm on right now." | "This workbook". |
+| **squash merge** | Combine all of a PR's commits into one commit on `main`. | Posting a batch as one summarized entry. |
 
 </details>
 
@@ -109,6 +124,11 @@ Every symbol and term I've met, with its **real name**, what it does, and what i
 | **relative path** | A location measured from where you are (`data/raw/x.csv`). | "Two folders down from here". |
 | **absolute path** | A full location from the drive (`C:\...`). Avoid in a public repo (shows your username). | A full UNC path. |
 | **extension** (VS Code) | An add-on, e.g. Rainbow CSV. | An Excel add-in. |
+| **`cd`** | **change directory**: move the terminal to another folder. Git acts on the repo you're standing in. | Opening a different folder in File Explorer. |
+| **`CommandNotFoundException`** | PowerShell read the first word as a command and found none by that name. | Keying a pay code that doesn't exist. |
+| **LF / CRLF** | Invisible end-of-line characters: LF (Linux/Mac) vs CRLF (Windows). Git's warning about converting them is harmless. | `2026-11-24` vs `11/24/2026`: same date, different format. |
+| **`U+0016`** | The invisible code Ctrl+V sends. Some REPLs take it as text → `SyntaxError`. Paste with right-click instead. | — |
+| **inline suggestions** | VS Code's AI autocomplete (grey ghost text, Tab accepts). Turn off for practice. | Autofill guessing the wrong formula. |
 
 </details>
 
