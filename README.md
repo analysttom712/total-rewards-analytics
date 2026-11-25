@@ -36,8 +36,31 @@ is missing. To set or update it:
 Get-Content .scan-blocklist.local.txt -Raw | gh secret set SCAN_BLOCKLIST
 ```
 
+## Learning hub (local study site)
+A small local site that lays the learning docs out like a course. It builds
+every page from `docs/` when you open it, so it is never a second copy. From
+the repo root, with the venv on:
+
+```powershell
+python -m hub
+```
+
+Then open <http://127.0.0.1:8765>. In VS Code: **Terminal → Run Task… → Start learning hub**.
+
+Answers typed on the site save to `hub/progress.local.json`, which is gitignored.
+`python -m hub --progress` prints what is saved. The plan is in
+[`docs/site/BRIEF.md`](docs/site/BRIEF.md).
+
 ## Roadmap
 See [`docs/CURRICULUM.md`](docs/CURRICULUM.md): Python data generator → SQL → dbt → Power BI → CI → AWS (S3/Glue/Athena) → incremental loads & PySpark.
+
+## Acknowledgments
+How this repo works with AI (a short always-loaded instruction file, rules enforced
+by tools instead of wording, alignment before building, thin end-to-end slices) is
+adapted from ideas in two AI Engineer talks:
+
+- Matt Pocock, [Full Walkthrough: Workflow for AI Coding](https://youtu.be/-QFHIoCo-Ko)
+- Lydia Hallie, [Rethinking Claude Code Best Practices](https://youtu.be/vlfCjWuv4es)
 
 ## Author
 Thomas Baynum · [GitHub](https://github.com/analysttom712)

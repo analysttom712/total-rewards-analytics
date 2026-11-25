@@ -34,6 +34,13 @@ gh pr create --title "..." --body "Closes #N. ..."
 gh pr merge <N> --merge --delete-branch
 ```
 
+**Study site (learning hub):**
+```powershell
+python -m hub                        # start it, then open http://127.0.0.1:8765
+python -m hub --progress             # print the answers and marks I've saved
+```
+Ctrl+C in that terminal stops it. In VS Code: Terminal → Run Task… → Start learning hub.
+
 </details>
 
 ---
