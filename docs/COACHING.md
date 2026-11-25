@@ -31,7 +31,7 @@ Each build step gives:
   5. **Before → after:** a short `text` box showing the spot as it is now and as it should look, with 1–2 lines of context.
 - **Check:** how I'll know it worked.
 
-**Hint ladder: one rung per real attempt.** Nudge (a question or the parts list) → bigger hint, only after an attempt → partial code, last. Skeletons with one blank count as partial code. When I'm stuck after a try, the next hint narrows one clue; the full line comes last.
+**Hint ladder: one rung per real attempt.** Nudge (a question or the parts list) → bigger hint, only after an attempt → partial code, last. Skeletons with one blank count as partial code. When I'm stuck after a try, the next hint narrows one clue; the full line comes last. Ladders written ahead in a doc keep partial code inside a closed `<details>`, so reading ahead takes a deliberate click.
 
 ## 3. Before acting or reviewing
 
@@ -83,6 +83,7 @@ One row per session (filled in by `/wrap`). Keep the last 10 rows; at sprint rev
 | 2026-11-23 | 002 | 83% | partial code | ~1 / ~5 | Reset to one-step pace worked |
 | 2026-11-24 | 003 | 17% (wrap) · 50% (/quiz) | partial code | ~2 / ~7 | Naming (list vs loop var vs row); range stop |
 | 2026-11-24 | 003 review | 70% (/quiz 3.5/5) | partial code (premium loop) | 4 / 4 | Predictions strong; typed into the wrong file, autocomplete took over |
+| 2026-11-25 | Review 1 | 100% (wrap 3/3) | none (review session, no build) | 0 / 0 | Reviewed PRs #30, #31; shipped fix PR #33. Explained a race, a squash merge and `on` vs `where` in his own words |
 
 Days 1–3 error counts are estimates (`~`); counted exactly from Day 4.
 
@@ -97,7 +98,7 @@ Hint rungs: **nudge** → **bigger hint** → **partial code**.
 - A concept missed 3 times → its own mini-ticket (see `docs/REVIEW_QUEUE.md`).
 - Errors I read myself goes up → hand me error reading first, before any hint.
 
-**Current status (after Day 3 review):** every session so far reached partial code, so the first rule is in effect. Note that part of this came from the tutor climbing the ladder too fast (Day 4 retro). Hold the ladder for a week before judging.
+**Current status (after Review 1, 2026-11-25):** last 3 rows average 73% on quiz (50%, 70%, 100%), so neither quiz rule fires. Rule 1 stays in effect from earlier sessions, because both build sessions in the window reached partial code. Today's 100% was a quiz with no build, so it doesn't count toward the stretch rule. Keep holding the ladder (Day 4 retro). Judge again after Day 5, the first build session with the slower ladder.
 
 ## 9. Retro log
 
@@ -108,3 +109,4 @@ Two lines per session: what clicked, what to change. Newest at the bottom. Keep 
 - **2026-11-24 (Day 3):** Clicked: Power Query "Changed Type" for `to_datetime`; three-names table for the loop; payroll cutoff for `range`. Change: show the data before asking me to use it; real names for symbols; daily agenda with resources.
 - **2026-11-24 (Day 3 review):** Clicked: Git states by doing them on real files; `print` vs `return`; predicting errors before running. Change: confirm which file I'm editing; practice in the REPL or a scratch file; inline suggestions off.
 - **2026-11-25 (Day 4):** I felt lost ("a copy-paste battlefield"). Tutor self-review found 8 mistakes: hint ladder too fast, stale line numbers, reviewing old pastes, late risk fixes, skipped lesson block, guessing errors, dense messages, acting before checking. All folded into sections 1–4 above.
+- **2026-11-25 (Review 1):** Clicked: "what order does this run in?" explained the race, the squash merge and `on` vs `where`; reviewing a PR from its findings instead of reading every line. Change: hint ladders written ahead of time keep partial code folded shut (now in section 2); a fix found after a merge goes on its own branch.

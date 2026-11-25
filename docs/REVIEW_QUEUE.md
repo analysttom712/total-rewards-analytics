@@ -38,6 +38,12 @@ Rules: ask due items oldest-first, misses before new items, at most 3 review que
 | Lists count from 0; `[-1]` = last | 3 | 2026-11-24 | ✓ | 0 | 2026-11-28 | Day 2 | |
 | Seed: same order of random calls → same output | 2 | 2026-11-23 | ✓ | 0 | 2026-11-25 | Day 2 | |
 | Higher grade → higher pay range (no inversions) | 2 | 2026-11-24 | ✓ | 0 | 2026-11-26 | Day 2 | |
+| Lost update: two threads read the same old file, the last write wins; a lock makes read-change-write take turns | 2 | 2026-11-25 | ✓ | 0 | 2026-11-27 | Review 1 | |
+| Squash merge = one new commit on `main`; `git branch -d` refuses (it checks history), so compare contents, then `-D` | 2 | 2026-11-25 | ✓ | 0 | 2026-11-27 | Review 1 | |
+| Left join: an as-of rule in `where` drops unmatched rows (acts like inner); in `on` keeps them with NULLs | 2 | 2026-11-25 | ✓ | 0 | 2026-11-27 | Review 1 | |
+| Golden values: type the expected answer in by hand, don't recompute the formula in the test | 1 | 2026-11-25 | new | 0 | 2026-11-26 | Review 1 | |
+| A key built from text that gets edited (a hash of the wording) breaks the join when the text changes; use a stable ID | 1 | 2026-11-25 | new | 0 | 2026-11-26 | Review 1 | |
+| A fix found after a PR merged goes on a new branch from `main` and its own PR | 1 | 2026-11-25 | new | 0 | 2026-11-26 | Review 1 | |
 
 ## Retired (✓ at box 5)
 
