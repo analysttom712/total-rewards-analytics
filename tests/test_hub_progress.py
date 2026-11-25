@@ -1,6 +1,7 @@
 """Tests for hub/progress.py (tooling, not a learning exercise)."""
 
 import json
+import threading
 
 import pytest
 
@@ -69,6 +70,30 @@ def test_a_broken_file_is_an_error_and_is_not_overwritten(tmp_path):
     path.write_text(json.dumps(["a", "list"]), encoding="utf-8")
     with pytest.raises(progress.ProgressError):
         progress.load(path)
+
+
+def test_saves_made_at_the_same_moment_are_all_kept(tmp_path):
+    # The server answers each request on its own thread, so two quick clicks
+    # can save at once. Every save must land; none may overwrite another.
+    path = tmp_path / "progress.json"
+    errors: list[Exception] = []
+
+    def tick(number: int) -> None:
+        try:
+            progress.save_task(
+                path, lesson=f"day-{number:03d}", task="terms", done=True
+            )
+        except Exception as err:  # noqa: BLE001 - the test reports any failure
+            errors.append(err)
+
+    threads = [threading.Thread(target=tick, args=(n,)) for n in range(20)]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+
+    assert errors == []
+    assert len(progress.load(path)["tasks"]) == 20
 
 
 def test_summary_reads_back_what_was_saved(tmp_path):

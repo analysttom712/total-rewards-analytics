@@ -4,19 +4,25 @@ Takes in: one answer or one self-mark at a time.
 Puts out: `hub/progress.local.json` (gitignored), which `/standup` reads.
 
 Every write goes to a temporary file first and is then swapped into place, so
-a crash mid-save can't leave a half-written file.
+a crash mid-save can't leave a half-written file. Every read-change-write
+also holds one lock, because the server answers each request on its own thread:
+without it, two saves at once would overwrite each other.
 """
 
 from __future__ import annotations
 
 import json
 import os
+import threading
 from datetime import datetime
 from pathlib import Path
 
 VERSION = 1
 MARKS = {"correct": "✓", "partial": "½", "missed": "✗"}
 MAX_ANSWER_CHARS = 4000
+
+# One save at a time: load, change and write happen as a single step.
+_SAVE_LOCK = threading.Lock()
 
 
 class ProgressError(ValueError):
@@ -68,20 +74,21 @@ def save_answer(
     if len(answer) > MAX_ANSWER_CHARS:
         raise ProgressError(f"The answer is over {MAX_ANSWER_CHARS} characters.")
 
-    data = load(path)
-    previous = data["answers"].get(item_id, {})
-    unchanged = previous.get("answer") == answer
-    entry = {
-        "lesson": lesson,
-        "question": question,
-        "concept": concept,
-        "answer": answer,
-        "answered_at": _now(),
-        "self_mark": previous.get("self_mark") if unchanged else None,
-        "official_mark": previous.get("official_mark") if unchanged else None,
-    }
-    data["answers"][item_id] = entry
-    _write(path, data)
+    with _SAVE_LOCK:
+        data = load(path)
+        previous = data["answers"].get(item_id, {})
+        unchanged = previous.get("answer") == answer
+        entry = {
+            "lesson": lesson,
+            "question": question,
+            "concept": concept,
+            "answer": answer,
+            "answered_at": _now(),
+            "self_mark": previous.get("self_mark") if unchanged else None,
+            "official_mark": previous.get("official_mark") if unchanged else None,
+        }
+        data["answers"][item_id] = entry
+        _write(path, data)
     return entry
 
 
@@ -89,13 +96,14 @@ def save_self_mark(path: Path, *, item_id: str, mark: str) -> dict:
     """Store Thomas's own mark. It is provisional until `/standup` grades it."""
     if mark not in MARKS:
         raise ProgressError(f"Unknown mark: {mark!r}.")
-    data = load(path)
-    entry = data["answers"].get(item_id)
-    if entry is None:
-        raise ProgressError("Save an answer before marking it.")
-    entry["self_mark"] = mark
-    entry["marked_at"] = _now()
-    _write(path, data)
+    with _SAVE_LOCK:
+        data = load(path)
+        entry = data["answers"].get(item_id)
+        if entry is None:
+            raise ProgressError("Save an answer before marking it.")
+        entry["self_mark"] = mark
+        entry["marked_at"] = _now()
+        _write(path, data)
     return entry
 
 
@@ -103,10 +111,11 @@ def save_task(path: Path, *, lesson: str, task: str, done: bool) -> dict:
     """Tick or untick one hand-marked task on a lesson's task list."""
     if not isinstance(done, bool):
         raise ProgressError("A task is either done or not done.")
-    data = load(path)
-    tasks = data.setdefault("tasks", {})
-    tasks.setdefault(lesson, {})[task] = done
-    _write(path, data)
+    with _SAVE_LOCK:
+        data = load(path)
+        tasks = data.setdefault("tasks", {})
+        tasks.setdefault(lesson, {})[task] = done
+        _write(path, data)
     return {"lesson": lesson, "task": task, "done": done}
 
 
