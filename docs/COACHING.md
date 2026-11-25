@@ -56,22 +56,22 @@ Each build step gives:
   - Payroll / accounting: exclusive cutoff date (`range` stop), payment referencing an invoice (`Closes #N`), posted journal entry (commit), recon sent for review (PR).
   - Report visuals: `print` = card visual, `return` = measure.
 
-## 6. Session agenda (fits 120 minutes)
+## 6. Session agenda
 
 Every `/standup` shows this before teaching:
 
-| Block | Time | What |
-|---|---|---|
-| Standup + review | 10 min | the map · yesterday · due review questions |
-| Lesson | 15 min | today's concept, taught **before** the build, with new terms named |
-| Build | 60 min | the ticket, one step at a time |
-| Check | 10 min | run it · `/quiz` |
-| Ship | 10 min | commit → PR → merge |
-| Cert study | 15 min | the next Microsoft Learn / cert module |
+| Block | What |
+|---|---|
+| Standup + review | the map · yesterday · due review questions |
+| Lesson | today's concept, taught **before** the build, with new terms named |
+| Build | the ticket, one step at a time |
+| Check | run it · `/quiz` |
+| Ship | commit → PR → merge |
+| Cert study | the next Microsoft Learn / cert module |
 
 Plus 2–3 links for today's concept from `docs/RESOURCES.md`.
 
-**Short on time?** Drop cert study first, then cut the build to one step. Never skip the lesson or the ship.
+If I stop mid-build, the next /standup resumes from the LEARNING_LOG note instead of starting a new ticket.
 
 ## 7. Signals
 

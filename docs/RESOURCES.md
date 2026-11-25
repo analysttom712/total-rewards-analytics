@@ -12,7 +12,7 @@ Curated links by topic. `/standup` picks 2–3 for the day's concept; add new on
 | **AWS Cloud Practitioner (CLF-C02)** | [Cert page](https://aws.amazon.com/certification/certified-cloud-practitioner/) | Phase 6. Also clears WGU *Cloud Foundations*. |
 | **dbt Analytics Engineering** | [dbt Learn](https://learn.getdbt.com/) | Phase 8. |
 
-**Suggested GH-900 order (15 min per session):** Introduction to Git → Introduction to GitHub → Working with GitHub repositories → Collaboration features. Each one matches something we've already done in the repo.
+**Suggested GH-900 order (one module per session):** Introduction to Git → Introduction to GitHub → Working with GitHub repositories → Collaboration features. Each one matches something we've already done in the repo.
 
 </details>
 

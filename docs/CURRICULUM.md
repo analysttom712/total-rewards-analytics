@@ -1,4 +1,4 @@
-# Curriculum: Analytics Engineer track (about 2 hours a day, about 12 months)
+# Curriculum: Analytics Engineer track (about 12 months; pace by ticket, not by clock)
 
 Week counts assume 5 sessions a week. If life happens, the order matters more than the dates. Each phase ends with a **milestone** (something that works) and a **check** (Thomas explains it out loud as if in an interview).
 
