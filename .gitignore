@@ -32,3 +32,6 @@ Thumbs.db
 # Generated data (regenerate from the seed; only data/sample/ is committed)
 data/raw/
 data/large/
+
+# Local Claude Code settings (output style); never committed
+.claude/settings.local.json
