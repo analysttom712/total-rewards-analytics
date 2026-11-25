@@ -228,6 +228,13 @@ def make_handler(config: HubConfig) -> type[BaseHTTPRequestHandler]:
             except progress.ProgressError as err:
                 self._json(400, {"ok": False, "error": str(err)})
                 return
+            except OSError as err:
+                # The disk refused the write (file open elsewhere, disk full).
+                # Say so, rather than dropping the connection with no reply.
+                self._json(
+                    500, {"ok": False, "error": f"Could not write the file: {err}"}
+                )
+                return
             self._json(200, {"ok": True, "entry": entry})
 
         def _save_task(self, body: dict) -> dict:
