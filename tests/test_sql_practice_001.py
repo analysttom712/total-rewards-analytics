@@ -7,8 +7,10 @@ The test is skipped until the ticket starts. To start P2-01, delete the
 `pytestmark = pytest.mark.skip(...)` line below, run `python -m pytest`, and
 read the failure before writing any SQL.
 
-The expected numbers are golden values taken from today's job catalog
-(generator/job_catalog.py). If the catalog changes, these values change with it.
+The expected numbers are golden values worked out by hand from today's job
+catalog (generator/job_catalog.py). They are typed in, not recomputed, so they
+check the query independently. If the catalog changes, this test fails on
+purpose: work the new values out by hand and update them here.
 """
 
 import importlib.util
@@ -39,7 +41,9 @@ def load_jobs() -> list[dict]:
 def result() -> list[dict]:
     """Run Thomas's query against an in-memory hr_job table; one dict per result row."""
     if not SQL_FILE.exists():
-        pytest.fail(f"Create {SQL_FILE.relative_to(REPO)} (copy sql/practice/_template.sql)")
+        pytest.fail(
+            f"Create {SQL_FILE.relative_to(REPO)} (copy sql/practice/_template.sql)"
+        )
 
     con = duckdb.connect()  # in memory: nothing is written to disk
     con.execute(
@@ -67,8 +71,15 @@ def test_one_row_per_job(result):
 
 
 def test_shows_the_columns_the_manager_asked_for(result):
-    expected = {"job_code", "job_title", "grade", "salary_min", "range_midpoint",
-                "salary_max", "range_spread_pct"}
+    expected = {
+        "job_code",
+        "job_title",
+        "grade",
+        "salary_min",
+        "range_midpoint",
+        "salary_max",
+        "range_spread_pct",
+    }
     assert expected <= set(result[0])
 
 

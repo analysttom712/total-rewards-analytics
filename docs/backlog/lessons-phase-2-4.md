@@ -2,7 +2,7 @@
 
 One outline per ticket in [`phase-2.md`](phase-2.md), [`phase-3.md`](phase-3.md) and [`phase-4.md`](phase-4.md). `/standup` turns the day's outline into the lesson block, following [`docs/COACHING.md`](../COACHING.md): one concept at a time, show the data first, Thomas predicts before running, one hint rung per real attempt.
 
-**What's here and what isn't.** Each outline has the concept, why it matters on the job, a Power BI / payroll analogy, a hint ladder and 2–3 resources. The ladder stops at **partial code with `____` blanks**; there are no full solutions anywhere in this file. Phase 4 rungs stop at partial *steps* in words, because the DAX is Thomas's.
+**What's here and what isn't.** Each outline has the concept, why it matters on the job, a Power BI / payroll analogy, a hint ladder and 2–3 resources. The ladder stops at **partial code with `____` blanks**; there are no full solutions anywhere in this file. Rung 3 is folded shut under "Show the partial code" (COACHING.md: one rung per real attempt, partial code last), so reading ahead takes a deliberate click. Phase 4 rungs stop at partial *steps* in words, because the DAX is Thomas's.
 
 **Resources.** The top-level links (DuckDB, dbt, Power BI docs, cert pages) are in [`docs/RESOURCES.md`](../RESOURCES.md). The deeper links below are pages inside those same sites, each checked to load on 2026-11-25. The PR that adds this file proposes adding them to `RESOURCES.md` when each lesson is taught.
 
@@ -19,7 +19,9 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "Which columns does the manager want that aren't in `hr_job` yet? Write each as a sentence in business words first."
   2. *Bigger hint:* "A new column is `<expression> as <name>` in the select list. The midpoint is halfway between two columns you already have. Spread compares the width of the range to its bottom."
-  3. *Partial code:*
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
      ```sql
      select
          job_code,
@@ -32,6 +34,8 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
      from hr_job
      order by ____
      ```
+
+     </details>
 - **Resources:** [DuckDB: SELECT](https://duckdb.org/docs/stable/sql/query_syntax/select) · [DuckDB Python API](https://duckdb.org/docs/stable/clients/python/overview) · [pytest: Get started](https://docs.pytest.org/en/stable/getting-started.html)
 
 ### P2-02 · Load the raw files into a local warehouse; headcount by department
@@ -41,12 +45,16 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "What should happen to the table if it already exists when you run the load again? Say it in words."
   2. *Bigger hint:* "DuckDB can read a CSV straight inside a `select` with a reader function. `create or replace table` answers the re-run question."
-  3. *Partial code:*
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
      ```sql
      create or replace table ____ as
      select * from read_csv('data/raw/____.csv');
      ```
      and for headcount: `select ____, count(*) ... group by ____ order by ____ desc`.
+
+     </details>
 - **Resources:** [DuckDB: CSV import](https://duckdb.org/docs/stable/data/csv/overview) · [DuckDB: GROUP BY](https://duckdb.org/docs/stable/sql/query_syntax/groupby) · [DuckDB: date functions](https://duckdb.org/docs/stable/sql/functions/date)
 
 ### P2-03 · Joins and fan-out
@@ -56,7 +64,9 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "Before joining, how many rows do you expect afterwards, and why? Write the number down."
   2. *Bigger hint:* "For 'missing department', keep every employee and look for the rows where the org side came back empty. For the fan-out demo, join to something with more than one row per key."
-  3. *Partial code:*
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
      ```sql
      select e.employee_id, e.department_code
      from employees as e
@@ -64,6 +74,8 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
          on ____ = ____
      where ____ is null
      ```
+
+     </details>
 - **Resources:** [DuckDB: FROM and JOIN](https://duckdb.org/docs/stable/sql/query_syntax/from) · [Power BI: star schema guidance](https://learn.microsoft.com/en-us/power-bi/guidance/star-schema)
 
 ### P2-04 · CASE and CTEs: below minimum or above maximum
@@ -73,7 +85,9 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "List the three buckets and the rule for each in plain words, including what happens at exactly the min and exactly the max."
   2. *Bigger hint:* "First CTE: bring salary and the range together on one row. Second CTE: add the bucket. Final select: just the columns asked for. `case` checks conditions top to bottom and stops at the first true one."
-  3. *Partial code:*
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
      ```sql
      with salary_with_range as (
          select ____ from ____ join ____ on ____
@@ -89,6 +103,8 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
      )
      select ____ from bucketed
      ```
+
+     </details>
 - **Resources:** [DuckDB: CASE](https://duckdb.org/docs/stable/sql/expressions/case) · [DuckDB: WITH (CTEs)](https://duckdb.org/docs/stable/sql/query_syntax/with)
 
 ### P2-05 · Window functions I
@@ -98,7 +114,9 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "Do you want one row per department, or one row per employee with department information next to it? That decides `group by` vs window."
   2. *Bigger hint:* "Partition = the group the calculation restarts in. Order = the order inside it. `qualify` filters on a window result the way `having` filters on an aggregate."
-  3. *Partial code:*
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
      ```sql
      select
          department_code, employee_id, salary,
@@ -106,6 +124,8 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
      from ____
      qualify salary_rank <= ____
      ```
+
+     </details>
 - **Resources:** [DuckDB: window functions](https://duckdb.org/docs/stable/sql/functions/window_functions) · [DuckDB: QUALIFY](https://duckdb.org/docs/stable/sql/query_syntax/qualify) · [Mode: SQL window functions tutorial](https://mode.com/sql-tutorial/sql-window-functions)
 
 ### P2-06 · Effective dating: compa-ratio as of a date
@@ -114,8 +134,10 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Analogy:** this *is* HCM effective dating, done in SQL. In Power BI terms: picking the row whose start/end dates bracket a slicer date. Payroll analogy: using the rate in effect on the pay date, not the rate today.
 - **Hint ladder:**
   1. *Nudge:* "For one employee with three salary rows, which row was in effect on June 30? Write the rule that picks it, using the start and end dates."
-  2. *Bigger hint:* "The rule goes in the join condition, not the `where`, and it appears once per effective-dated table (salary, assignment, range). Put the as-of date in a one-row CTE so it's written once."
-  3. *Partial code:*
+  2. *Bigger hint:* "The rule appears once per effective-dated table (salary, assignment, range). For the table in `from`, it goes in the `where`. For each table you join, it goes in that join's `on`: in a left join, putting it in the `where` instead would quietly drop the employees with no matching row. Put the as-of date in a one-row CTE so it's written once."
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
      ```sql
      with params as (select date '____' as as_of_date)
      select ...
@@ -127,6 +149,8 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
         and p.as_of_date ____ a.effective_end
      where p.as_of_date ____ s.effective_start and ____
      ```
+
+     </details>
 - **Resources:** [DuckDB: FROM and JOIN (ASOF joins section)](https://duckdb.org/docs/stable/sql/query_syntax/from) · [DuckDB: date functions](https://duckdb.org/docs/stable/sql/functions/date)
 
 ### P2-07 · Window functions II: merit increase % (LAG)
@@ -136,13 +160,17 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "For one employee, list their salary rows in date order. What does 'previous salary' mean for the first row?"
   2. *Bigger hint:* "`lag(column) over (partition by <who> order by <when>)`. Percent change = change ÷ old value. Filter to merit rows *after* computing the previous salary, or a promotion row will become someone's 'previous'."
-  3. *Partial code:*
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
      ```sql
      select
          employee_id, effective_start, salary, change_reason,
          lag(____) over (partition by ____ order by ____) as previous_salary
      from comp_salary
      ```
+
+     </details>
 - **Resources:** [DuckDB: window functions](https://duckdb.org/docs/stable/sql/functions/window_functions) · [Mode: SQL window functions tutorial](https://mode.com/sql-tutorial/sql-window-functions)
 
 ### P2-08 · Messy IDs, dedupe and set operations
@@ -152,7 +180,9 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "Write three carrier IDs that are really the same person. What steps make them identical?"
   2. *Bigger hint:* "Clean the ID first, in its own CTE. Then number the rows per cleaned ID in an order that puts the row you want to keep first, and keep row 1. `except` compares whole rows, so select only the key on both sides."
-  3. *Partial code:*
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
      ```sql
      with cleaned as (
          select *, lpad(trim(____), ____, '0') as member_key from carrier_eligibility_file_a
@@ -160,6 +190,8 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
      select * from cleaned
      qualify row_number() over (partition by ____ order by ____ desc) = 1
      ```
+
+     </details>
 - **Resources:** [DuckDB: set operations](https://duckdb.org/docs/stable/sql/query_syntax/setops) · [DuckDB: QUALIFY](https://duckdb.org/docs/stable/sql/query_syntax/qualify)
 
 ### P2-09 · Conditional aggregation: gross-to-net
@@ -169,7 +201,9 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "Which pay-code categories become columns? How will you know a pay code didn't fall through the cracks?"
   2. *Bigger hint:* "One `sum(case when category = '...' then amount end)` per column, grouped by employee. Then compare the total of all columns to the total of the long table."
-  3. *Partial code:*
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
      ```sql
      select
          r.employee_id,
@@ -180,6 +214,8 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
      where r.pay_period_id = ____
      group by ____
      ```
+
+     </details>
 - **Resources:** [DuckDB: GROUP BY](https://duckdb.org/docs/stable/sql/query_syntax/groupby) · [DuckDB: CASE](https://duckdb.org/docs/stable/sql/expressions/case)
 
 ### P2-10 · Nulls, tie-outs and query plans
@@ -189,7 +225,9 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "If a period has payroll but no GL rows, what does an inner join do to it? What does `sum` return over zero rows?"
   2. *Bigger hint:* "Total each side per period in its own CTE first, then join the two totals with a join that keeps periods from either side. Decide the status with `case`, checking the missing case first."
-  3. *Partial code:*
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
      ```sql
      with payroll as (select pay_period_id, sum(amount) as payroll_total from ____ group by 1),
           gl as (select ____ )
@@ -199,6 +237,8 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
      from payroll as p
      ____ join gl as g on ____
      ```
+
+     </details>
 - **Resources:** [DuckDB: NULL values](https://duckdb.org/docs/stable/sql/data_types/nulls) · [DuckDB: EXPLAIN ANALYZE](https://duckdb.org/docs/stable/guides/meta/explain_analyze)
 
 ---
@@ -212,7 +252,9 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "Open your P2-01 query. Which parts are 'cleanup' and which are 'business logic'? Only the cleanup belongs in staging."
   2. *Bigger hint:* "A source is declared in YAML (source name, table names); the model selects from `{{ source('<source>', '<table>') }}`. Tests go in a YAML file next to the model under `data_tests:`."
-  3. *Partial code:*
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
      ```yaml
      sources:
        - name: ____
@@ -226,6 +268,8 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
          ____
      from {{ source('____', '____') }}
      ```
+
+     </details>
 - **Resources:** [dbt: How we structure our projects](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview) · [dbt: sources](https://docs.getdbt.com/docs/build/sources) · [dbt: DuckDB setup](https://docs.getdbt.com/docs/core/connect-data-platform/duckdb-setup)
 
 ### P3-02 · Staging for HR core and comp, with generic tests
@@ -235,7 +279,9 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "For each table, what makes a row unique? For `comp_salary`, is `employee_id` enough?"
   2. *Bigger hint:* "When one column isn't unique, the key is a combination; `dbt_utils` has a test for exactly that. `packages.yml` lists the package; `dbt deps` installs it."
-  3. *Partial code:*
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
      ```yaml
      models:
        - name: stg_hcm__salary
@@ -243,6 +289,8 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
            - dbt_utils.unique_combination_of_columns:
                combination_of_columns: [____, ____]
      ```
+
+     </details>
 - **Resources:** [dbt: data tests](https://docs.getdbt.com/docs/build/data-tests) · [dbt_utils package](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/)
 
 ### P3-03 · Seeds and the first intermediate model
@@ -252,7 +300,12 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "Which lookups change only when a person decides they should? Those are seed candidates. Which are delivered by a system? Those aren't."
   2. *Bigger hint:* "A CSV in `seeds/` becomes a table after `dbt seed` (or `dbt build`), and you `ref()` it like a model. Materialization is set in the model's `config()` or in `dbt_project.yml`."
-  3. *Partial code:* `{{ config(materialized='____') }}` at the top of `int_assignment_current.sql`, then a `where` that keeps only ____ rows.
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
+     `{{ config(materialized='____') }}` at the top of `int_assignment_current.sql`, then a `where` that keeps only ____ rows.
+
+     </details>
 - **Resources:** [dbt: seeds](https://docs.getdbt.com/docs/build/seeds) · [dbt: materializations](https://docs.getdbt.com/docs/build/materializations)
 
 ### P3-04 · The `as_of_filter` macro and `fct_compa_ratio`
@@ -262,12 +315,16 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "Look at your P2-06 condition. Which parts change from table to table (the alias, the date), and which stay the same?"
   2. *Bigger hint:* "A macro takes those changing parts as arguments and returns SQL text. Call it inside a model with `{{ as_of_filter(...) }}`. Check the compiled SQL in `target/compiled/` to see what it produced."
-  3. *Partial code:*
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
      ```sql
      {% macro as_of_filter(table_alias, as_of_date) %}
          ____
      {% endmacro %}
      ```
+
+     </details>
 - **Resources:** [dbt: Jinja and macros](https://docs.getdbt.com/docs/build/jinja-macros) · [dbt: node selection syntax](https://docs.getdbt.com/reference/node-selection/syntax)
 
 ### P3-05 · Snapshots and `dim_employee`
@@ -277,7 +334,12 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "If the extract only shows today's job, how would you know someone's job last month? What would you have to save on every run?"
   2. *Bigger hint:* "A snapshot needs a unique key and a strategy: `timestamp` (an updated-at column tells you what changed) or `check` (compare listed columns). Run it, change the source, run it again, and look at the valid-from/valid-to columns."
-  3. *Partial code:* in the snapshot YAML: `unique_key: ____`, `strategy: ____`, and either `updated_at: ____` or `check_cols: [____]`.
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
+     in the snapshot YAML: `unique_key: ____`, `strategy: ____`, and either `updated_at: ____` or `check_cols: [____]`.
+
+     </details>
 - **Resources:** [dbt: snapshots](https://docs.getdbt.com/docs/build/snapshots) · [Power BI: star schema guidance (SCD section)](https://learn.microsoft.com/en-us/power-bi/guidance/star-schema)
 
 ### P3-06 · Benefits: `fct_benefit_cost_pepm`
@@ -287,7 +349,12 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "Say the grain in one sentence: one row per ____. Which slicers does that allow, and which does it rule out?"
   2. *Bigger hint:* "Build months first (from `dim_date` or a date spine), then which elections were active each month, then the rate in effect that month, reusing `as_of_filter`."
-  3. *Partial code:* a YAML description line that states the grain, plus a `dbt_utils.unique_combination_of_columns` test on ____, ____ and ____.
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
+     a YAML description line that states the grain, plus a `dbt_utils.unique_combination_of_columns` test on ____, ____ and ____.
+
+     </details>
 - **Resources:** [dbt: How we structure our projects](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview) · [Power BI: star schema guidance](https://learn.microsoft.com/en-us/power-bi/guidance/star-schema)
 
 ### P3-07 · Payroll: `fct_payroll_gl_tieout`
@@ -297,7 +364,12 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "A singular test passes when it returns zero rows. What query returns the periods that *don't* tie?"
   2. *Bigger hint:* "Put that query in a `.sql` file in dbt's tests folder, selecting from `ref('fct_payroll_gl_tieout')`. Severity is set in a `config()` block at the top."
-  3. *Partial code:* `{{ config(severity='____') }}` then `select * from {{ ref('____') }} where status = '____'`.
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
+     `{{ config(severity='____') }}` then `select * from {{ ref('____') }} where status = '____'`.
+
+     </details>
 - **Resources:** [dbt: data tests (singular tests, severity)](https://docs.getdbt.com/docs/build/data-tests)
 
 ### P3-08 · Recon: `fct_carrier_reconciliation`
@@ -307,7 +379,12 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "Put the two carrier layouts side by side. Which columns mean the same thing under different names?"
   2. *Bigger hint:* "One staging model per file that renames to a shared set of columns, then `union all` in the intermediate model. The ID cleanup from P2-08 becomes a macro both use."
-  3. *Partial code:* `select ____ as member_key, ____ as plan_code, 'a' as source_file from {{ ref('stg_carrier__eligibility_a') }} union all select ____`.
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
+     `select ____ as member_key, ____ as plan_code, 'a' as source_file from {{ ref('stg_carrier__eligibility_a') }} union all select ____`.
+
+     </details>
 - **Resources:** [DuckDB: set operations](https://duckdb.org/docs/stable/sql/query_syntax/setops) · [dbt: Jinja and macros](https://docs.getdbt.com/docs/build/jinja-macros)
 
 ### P3-09 · `fct_total_rewards_statement` and `dim_date`
@@ -317,7 +394,12 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "List the five reward components. Which mart or intermediate model already has each one, at what grain?"
   2. *Bigger hint:* "Bring each component to employee × plan-year grain in its own CTE, then join them on that key. A date spine (`generate_series` in DuckDB, or the `dbt_utils.date_spine` macro) builds `dim_date`."
-  3. *Partial code:* `with salary as (select employee_id, plan_year, sum(____) as salary from {{ ref('____') }} group by 1, 2), ...`
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
+     `with salary as (select employee_id, plan_year, sum(____) as salary from {{ ref('____') }} group by 1, 2), ...`
+
+     </details>
 - **Resources:** [Power BI: date tables](https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-date-tables) · [dbt_utils package](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/)
 
 ### P3-10 · `assert_all_planted_anomalies_caught`, docs and lineage
@@ -327,7 +409,12 @@ Analogy key, used throughout: Power Query step → staging model · DAX measure 
 - **Hint ladder:**
   1. *Nudge:* "For each row in the answer key, which mart or test should flag it? Make that mapping a column."
   2. *Bigger hint:* "Load the answer key as a source or seed. The test selects answer-key rows that have no match in the union of flagged rows from the marts. Zero rows = every anomaly caught."
-  3. *Partial code:* `select k.* from {{ ref('____') }} as k left join flagged as f on ____ where f.____ is null`.
+  3. *Partial code:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial code</summary>
+
+     `select k.* from {{ ref('____') }} as k left join flagged as f on ____ where f.____ is null`.
+
+     </details>
 - **Resources:** [dbt: documentation](https://docs.getdbt.com/docs/build/documentation) · [dbt Analytics Engineering exam](https://www.getdbt.com/certifications/analytics-engineer-certification-exam)
 
 ---
@@ -343,7 +430,12 @@ Rung 3 in this phase is partial *steps*, not partial DAX.
 - **Hint ladder:**
   1. *Nudge:* "Where will the marts live in Phase 6? Which connection choice survives that move with the least rework?"
   2. *Bigger hint:* "Create a parameter for the folder path first, then point the Parquet source at it. Save as PBIP, then change one thing and run `git diff`."
-  3. *Partial steps:* parameter `MartsFolder` → Get Data → Parquet → file path built from the parameter → load `fct_compa_ratio` → check row count against DuckDB → Save as PBIP.
+  3. *Partial steps:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial steps</summary>
+
+     parameter `MartsFolder` → Get Data → Parquet → file path built from the parameter → load `fct_compa_ratio` → check row count against DuckDB → Save as PBIP.
+
+     </details>
 - **Resources:** [PBIP overview](https://learn.microsoft.com/en-us/power-bi/developer/projects/projects-overview) · [Power Query Parquet connector](https://learn.microsoft.com/en-us/power-query/connectors/parquet) · [PL-300 study guide](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/pl-300)
 
 ### P4-02 · Star schema
@@ -353,7 +445,12 @@ Rung 3 in this phase is partial *steps*, not partial DAX.
 - **Hint ladder:**
   1. *Nudge:* "For each fact, which dimensions does it need, and on which key?"
   2. *Bigger hint:* "Draw it in `text` first (facts in the middle). Every arrow points from a dimension to a fact. A fact with two dates gets one active relationship and one inactive."
-  3. *Partial steps:* load dims → load facts → create relationships from `powerbi-model-plan.md` → mark `dim_date` → hide keys → screenshot model view.
+  3. *Partial steps:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial steps</summary>
+
+     load dims → load facts → create relationships from `powerbi-model-plan.md` → mark `dim_date` → hide keys → screenshot model view.
+
+     </details>
 - **Resources:** [Power BI: star schema guidance](https://learn.microsoft.com/en-us/power-bi/guidance/star-schema) · [Power BI: date tables](https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-date-tables)
 
 ### P4-03 · Compensation page
@@ -363,7 +460,12 @@ Rung 3 in this phase is partial *steps*, not partial DAX.
 - **Hint ladder:**
   1. *Nudge:* "Which of these numbers does a mart column already hold? Which need an aggregate only?"
   2. *Bigger hint:* "A weighted average and a simple average of compa-ratio give different answers. Decide which the committee means before writing it."
-  3. *Partial steps:* create a display folder → write the average compa-ratio measure → check it against a DuckDB query on the mart → add a field parameter with department and job.
+  3. *Partial steps:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial steps</summary>
+
+     create a display folder → write the average compa-ratio measure → check it against a DuckDB query on the mart → add a field parameter with department and job.
+
+     </details>
 - **Resources:** [Field parameters](https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-field-parameters) · [Calculation groups](https://learn.microsoft.com/en-us/power-bi/transform-model/calculation-groups)
 
 ### P4-04 · Benefits, payroll and exceptions pages; performance
@@ -373,7 +475,12 @@ Rung 3 in this phase is partial *steps*, not partial DAX.
 - **Hint ladder:**
   1. *Nudge:* "What single question does each page answer? Which visual answers it fastest for the reader?"
   2. *Bigger hint:* "Start recording in Performance Analyzer, refresh visuals, sort by duration. Look at DAX query time vs visual display time."
-  3. *Partial steps:* record → find the slowest visual → change one thing (fewer fields, a simpler measure, or a pre-aggregated mart column) → record again → note both times.
+  3. *Partial steps:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial steps</summary>
+
+     record → find the slowest visual → change one thing (fewer fields, a simpler measure, or a pre-aggregated mart column) → record again → note both times.
+
+     </details>
 - **Resources:** [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer)
 
 ### P4-05 · Total rewards statement (drill-through)
@@ -383,7 +490,12 @@ Rung 3 in this phase is partial *steps*, not partial DAX.
 - **Hint ladder:**
   1. *Nudge:* "Which field identifies the person the page is about?"
   2. *Bigger hint:* "Put that field in the page's drill-through well; any visual showing it on another page then offers drill-through."
-  3. *Partial steps:* new page → drill-through field → statement visuals from `fct_total_rewards_statement` → back button → test from two source pages.
+  3. *Partial steps:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial steps</summary>
+
+     new page → drill-through field → statement visuals from `fct_total_rewards_statement` → back button → test from two source pages.
+
+     </details>
 - **Resources:** [Drill-through](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-drillthrough)
 
 ### P4-06 · Row-level security
@@ -393,5 +505,10 @@ Rung 3 in this phase is partial *steps*, not partial DAX.
 - **Hint ladder:**
   1. *Nudge:* "What does the report know about the person viewing it? How does that connect to their team?"
   2. *Bigger hint:* "The role filters one table (the access table or `dim_employee`) by the signed-in user. The relationships carry the filter to the facts. Facts without an employee key aren't filtered."
-  3. *Partial steps:* build the access table in dbt with a test → load it → relate it → create the Manager role with a filter on the user → "View as" two managers → compare totals.
+  3. *Partial steps:* open only after a real attempt at rung 2.
+     <details><summary>Show the partial steps</summary>
+
+     build the access table in dbt with a test → load it → relate it → create the Manager role with a filter on the user → "View as" two managers → compare totals.
+
+     </details>
 - **Resources:** [RLS in Power BI](https://learn.microsoft.com/en-us/power-bi/enterprise/service-admin-rls) · [RLS guidance](https://learn.microsoft.com/en-us/power-bi/guidance/rls-guidance)
