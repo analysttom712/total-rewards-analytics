@@ -3,9 +3,9 @@ description: End today's session (verify, quiz, safety scan, commit, PR, log, le
 ---
 Wrap up today's session.
 
-1. Run the checks for what changed (`ruff check`, `ruff format --check`, `pytest`, `dbt build`, or open the report). Show the results. Fix only what today's ticket needs.
+1. Run the checks for what changed (`ruff check`, `ruff format --check`, `dbt build`, or open the report), and always run the full test suite once: `python -m pytest`. Show the results, pass/fail counts included. A red test that belongs to a test-first exercise Thomas is still solving is expected: say so instead of fixing it. Fix only what today's ticket needs.
 2. Quiz: 3 questions on today's concept (one tied to a cert objective). Ask one at a time and score them. Skip this if `/quiz` already ran today; use that score.
-3. **Public-repo safety scan** (CLAUDE.md 2a): `git status`, `git diff --staged`. Check for secrets, real-looking data, employer or vendor names, local paths with his username, AWS IDs, and personal details in screenshots. Flag anything found before committing.
+3. **Public-repo safety check** (CLAUDE.md 2a): `scripts/public_scan.py` runs on every commit and covers secrets, AWS IDs, home-folder paths and blocklisted names. Review `git status` and `git diff --staged` for what it can't judge: real people's names, real-looking data, and personal details in screenshots. Flag anything found before committing.
 4. Thomas commits with a clear message, pushes, and opens a PR with `gh pr create` that links the issue (`Closes #N` in the **body**). Review the diff like a senior teammate; Thomas merges.
 5. Append to `docs/LEARNING_LOG.md`: date · day number · ticket · concept · what shipped · quiz score · blockers · next ticket.
 6. Update `docs/SKILLS_MATRIX.md` ratings that changed (0–4), with a one-line reason. Add an ADR to `docs/DECISIONS.md` if a design choice was made.

@@ -9,10 +9,10 @@ Run an incident drill. The safety rules in CLAUDE.md section 4a always apply.
 4. Coach with the debugging method, not the answer:
    reproduce → read the error / check row counts → find what changed (`git log`, `git diff`, source freshness) → isolate the layer (raw → staging → intermediate → mart → report) → form a hypothesis → test it → fix → **add a test so it can't happen again**.
    Hint ladder: at most 3 hints, each one more specific. Hint 3 names the layer, never the fix.
-5. When it's resolved, or after 60 min, reveal the root cause and compare it to his path.
+5. When it's resolved, or when Thomas has to stop or asks for the answer, reveal the root cause and compare it to his path.
 6. Thomas writes the postmortem at `docs/incidents/NNN-<slug>.md`: summary, impact, timeline, root cause, fix, the test added, what he'd do differently. Blameless tone.
 7. Log the drill in `docs/incidents/README.md`: number, date, level, fault type, time to resolve, hints used. Update SKILLS_MATRIX "Troubleshooting".
-8. Merge the fix (with the new test) through a PR. Delete the incident branch.
+8. The fix (with the new test) ships through a PR that Thomas merges. He deletes the incident branch afterwards.
 9. Offer a `/blog` angle: "Today my pipeline broke on purpose, and here's how I found it."
 
 $ARGUMENTS

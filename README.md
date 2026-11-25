@@ -10,6 +10,32 @@ Total Rewards teams answer questions like: *Are we paying people inside their ra
 ## Status
 Day 1: project skeleton and first Python script. Follow along in [`docs/blog/`](docs/blog/) and the [learning log](docs/LEARNING_LOG.md).
 
+## Working in this repo
+One-time setup after cloning, from the repo root:
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+git config core.hooksPath .githooks
+```
+
+The last line turns on the pre-commit hook in `.githooks/`. Every commit runs
+`scripts/public_scan.py` (secrets, account IDs, SSN-shaped numbers, home-folder
+paths, and any word in your local, gitignored `.scan-blocklist.local.txt`), which
+blocks the commit on a hit. It also runs `ruff check`, which only reports, so work
+in progress can always be committed to a branch. CI (`.github/workflows/checks.yml`)
+runs the scan, ruff and pytest on every pull request and on every push to `main`,
+and lint errors block the merge there.
+
+CI reads the blocklist from a repository secret named `SCAN_BLOCKLIST` (the same
+content as `.scan-blocklist.local.txt`, one word per line) and fails if the secret
+is missing. To set or update it:
+
+```powershell
+Get-Content .scan-blocklist.local.txt -Raw | gh secret set SCAN_BLOCKLIST
+```
+
 ## Roadmap
 See [`docs/CURRICULUM.md`](docs/CURRICULUM.md): Python data generator → SQL → dbt → Power BI → CI → AWS (S3/Glue/Athena) → incremental loads & PySpark.
 

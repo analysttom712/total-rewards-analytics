@@ -19,6 +19,7 @@ warehouse/*.duckdb.wal
 *.pem
 profiles.yml
 .aws/
+.scan-blocklist.local.txt
 
 # Power BI local caches
 *.pbix.bak
@@ -35,3 +36,5 @@ data/large/
 
 # Local Claude Code settings (output style); never committed
 .claude/settings.local.json
+# Stop-hook memory: last .py fingerprint and pytest result (scripts/claude_hooks.py)
+.claude/stop-pytest.state.json

@@ -1,0 +1,67 @@
+name: checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0   # full history, so the scan can diff against the base commit
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version-file: .python-version
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # The blocklist (employer / vendor names) lives only in the SCAN_BLOCKLIST secret.
+      # Same-repo runs fail closed without it. Fork PRs never receive secrets, so they
+      # only warn; every other scan rule still applies to them.
+      - name: Write the scan blocklist from the repo secret
+        env:
+          SCAN_BLOCKLIST: ${{ secrets.SCAN_BLOCKLIST }}
+          FROM_FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
+        run: |
+          if [ -z "$SCAN_BLOCKLIST" ]; then
+            if [ "$FROM_FORK" = "true" ]; then
+              echo "::warning::Fork PR: SCAN_BLOCKLIST is not available, so names are not being checked."
+            else
+              echo "::error::SCAN_BLOCKLIST secret is missing. Add it (README: Working in this repo) and re-run."
+              exit 1
+            fi
+          fi
+          printf '%s\n' "$SCAN_BLOCKLIST" > .scan-blocklist.local.txt
+
+      # Pull request: scan what the PR adds to its base branch.
+      # Push to main: scan what the push added since the previous commit on main.
+      - name: Public-repo scan
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_REF: ${{ github.base_ref }}
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            base="origin/$BASE_REF"
+          else
+            base="$BEFORE_SHA"
+          fi
+          case "$base" in
+            0000000*) base="HEAD~1" ;;   # no "before" commit recorded: scan the last commit
+          esac
+          python scripts/public_scan.py --base "$base"
+
+      - name: Lint
+        run: python -m ruff check .
+
+      - name: Tests
+        run: python -m pytest

@@ -13,7 +13,7 @@ Target: $ARGUMENTS (a PR number or branch name). If empty, review the current br
    - CLAUDE.md section 5 conventions (SQL style, dbt conventions, Python type hints and small functions)
    - `docs/COACHING.md`, only for how to phrase feedback to Thomas
 4. **Run checks, read-only:** `pytest`, `ruff check`, and `dbt build` if models changed. Don't fix anything, edit files, commit, push or merge.
-5. **Public-repo scan:** real names, employer or vendor names, real-looking pay data, secrets, local paths with his username, AWS account IDs. Any hit goes at the top of the review.
+5. **Public-repo scan:** run `git fetch`, then `python scripts/public_scan.py --base origin/main` (the same comparison CI makes: secrets, AWS account IDs, home-folder paths, blocklisted names), then read the diff for what it can't judge: real people's names and real-looking pay data. Any hit goes at the top of the review.
 6. **Write the review, short:**
    - **Verdict:** ready to merge / changes needed
    - **Acceptance criteria:** a checklist, each met or not
