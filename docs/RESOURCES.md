@@ -23,6 +23,7 @@ Curated links by topic. `/standup` picks 2–3 for the day's concept; add new on
 - [GitHub Docs: Get started](https://docs.github.com/en/get-started)
 - [Linking a pull request to an issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue): closing keywords (`Closes #N`), and why they only work when the PR targets the default branch.
 - [GitHub CLI manual](https://cli.github.com/manual/): `gh issue`, `gh pr create`, `gh pr merge`.
+- [About merge methods on GitHub](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/about-merge-methods-on-github): merge commit vs squash vs rebase (GH-900).
 
 </details>
 
@@ -33,6 +34,7 @@ Curated links by topic. `/standup` picks 2–3 for the day's concept; add new on
 - [Python docs: strings](https://docs.python.org/3/tutorial/introduction.html#text): quotes, escaping, triple quotes.
 - [f-strings](https://docs.python.org/3/tutorial/inputoutput.html#formatted-string-literals)
 - [pathlib](https://docs.python.org/3/library/pathlib.html): `Path`, `mkdir`.
+- [threading: Lock objects](https://docs.python.org/3/library/threading.html#lock-objects): how a lock makes threads take turns (the hub fix in PR #33).
 
 </details>
 

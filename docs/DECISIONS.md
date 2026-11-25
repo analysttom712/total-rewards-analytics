@@ -31,3 +31,9 @@ Short records: decision · options considered · why. These are interview talkin
 - **Emergency bypass:** Thomas can still run `git commit --no-verify` himself. Claude can't: the deny rules block it, and CI and branch protection still check whatever reaches GitHub.
 - **Blocklist handling:** the names are the secret. They live only in the gitignored `.scan-blocklist.local.txt` and the `SCAN_BLOCKLIST` secret, and the scanner never prints any part of a matched word, because CI logs on a public repo are public.
 - **Still wording only:** real people's names and real-looking pay data that match no pattern, screenshots, the tone of blog posts, and "he learns by doing". A script can't judge these, so `CLAUDE.md` section 2a and `/wrap` keep the by-eye check.
+
+## ADR-004: The hub's progress file saves one at a time, behind a lock (2026-11-25)
+- **Decision:** every save to `hub/progress.local.json` (answer, self-mark, task tick) holds one shared `threading.Lock` for the whole load → change → write. A write the disk refuses returns a JSON error instead of a dropped connection. Shipped in PR #33.
+- **Options:** a lock around each save (chosen); a server that handles one request at a time; SQLite instead of a JSON file.
+- **Why:** the review of PR #30 found that two saves at once overwrote each other. In a test of 20 saves fired together, only 1–2 were kept, and the rest failed with `PermissionError`. A lock is a few lines and keeps the file readable by hand, which `/standup` relies on. It only covers one running copy of the hub, though. If a second writer arrives (two hub copies, or `/wrap` writing while the hub runs in slice 3), revisit SQLite, which handles locking across processes.
+- **Open, Thomas's call:** a knowledge check's ID is a hash of its Concept wording, so rewording a concept in `REVIEW_QUEUE.md` drops its saved answer from the lesson page. Options: add a stable ID column to the queue, or accept the risk and say so in `docs/site/BRIEF.md`.
