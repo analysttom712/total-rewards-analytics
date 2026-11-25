@@ -38,3 +38,7 @@ data/large/
 .claude/settings.local.json
 # Stop-hook memory: last .py fingerprint and pytest result (scripts/claude_hooks.py)
 .claude/stop-pytest.state.json
+
+# Learning hub: answers and marks typed on the local study site; never committed
+hub/progress.local.json
+hub/progress.local.json.tmp
