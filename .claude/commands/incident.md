@@ -1,9 +1,9 @@
 ---
 description: Run a pipeline incident drill (tutor breaks something; Thomas troubleshoots)
 ---
-Run an incident drill per CLAUDE.md section 4b.
+Run an incident drill. The safety rules in CLAUDE.md section 4a always apply.
 
-1. Read `docs/incidents/README.md` (drill history) and `docs/CURRICULUM.md` to find the current phase. Pick a fault at or one level below the current drill level. Don't repeat a fault type from the last 3 drills.
+1. Read `docs/INCIDENTS.md` (levels, unlock points, cadence and example faults), `docs/incidents/README.md` (drill history) and `docs/CURRICULUM.md` (current phase). Check the cadence rules first: if a drill isn't due, or Thomas is short on time, say so and stop. Pick a fault at or one level below the current drill level (never more than one level above what he's shown he can handle). Don't repeat a fault type from the last 3 drills.
 2. On a new branch `incident/NNN`, inject exactly the fault(s) for this level. Use a vague commit message ("incident NNN setup"). Never touch `main` directly, never break anything outside the repo, never create AWS resources that bill, and never inject real secrets (use obviously fake ones like `AKIAFAKEFAKEFAKE0000`).
 3. Give Thomas only what a real on-call analyst would get: a short "ticket from the business," e.g. *"Hi, the benefits cost dashboard shows 2x the employees in Finance this morning. Can you look? –Total Rewards Manager"*. Include the symptom, not the cause. Start a timer (note the time).
 4. Coach with the debugging method, not the answer:
