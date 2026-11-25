@@ -19,6 +19,7 @@ warehouse/*.duckdb.wal
 *.pem
 profiles.yml
 .aws/
+.scan-blocklist.local.txt
 
 # Power BI local caches
 *.pbix.bak
@@ -32,3 +33,12 @@ Thumbs.db
 # Generated data (regenerate from the seed; only data/sample/ is committed)
 data/raw/
 data/large/
+
+# Local Claude Code settings (output style); never committed
+.claude/settings.local.json
+# Stop-hook memory: last .py fingerprint and pytest result (scripts/claude_hooks.py)
+.claude/stop-pytest.state.json
+
+# Learning hub: answers and marks typed on the local study site; never committed
+hub/progress.local.json
+hub/progress.local.json.tmp

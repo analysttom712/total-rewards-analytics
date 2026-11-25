@@ -1,0 +1,25 @@
+#!/bin/sh
+# Runs before every commit in this repo, by anyone (Thomas, Claude, an IDE).
+# Blocks the commit if the public-repo scan finds something (or can't run).
+# ruff only reports here, so work in progress can be committed to a branch;
+# CI blocks the merge on lint errors.
+# One-time setup per clone:  git config core.hooksPath .githooks
+
+cd "$(git rev-parse --show-toplevel)" || exit 1
+
+if [ -x .venv/Scripts/python.exe ]; then
+  PY=.venv/Scripts/python.exe          # Windows venv
+elif [ -x .venv/bin/python ]; then
+  PY=.venv/bin/python                  # macOS / Linux venv
+else
+  echo "pre-commit: no .venv found, so the scan can't run. Create the venv (see README)."
+  exit 1
+fi
+
+"$PY" scripts/public_scan.py || {
+  echo "pre-commit: commit blocked by the public-repo scan (see above)."
+  exit 1
+}
+
+"$PY" -m ruff check . || echo "pre-commit: ruff found lint errors (reported, not blocking; CI blocks the merge)."
+exit 0

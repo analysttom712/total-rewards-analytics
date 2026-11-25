@@ -108,6 +108,8 @@ Every symbol and term I've met, with its **real name**, what it does, and what i
 | **upstream** (`-u`) | The GitHub branch your local branch is linked to. After `push -u`, plain `git push` works. `[gone]` = its GitHub copy was deleted. | The SharePoint file your local copy syncs to. |
 | **`HEAD`** | "The branch/commit I'm on right now." | "This workbook". |
 | **squash merge** | Combine all of a PR's commits into one commit on `main`. | Posting a batch as one summarized entry. |
+| **`git branch -d` vs `-D`** | `-d` deletes a branch only if its commits are in `main`'s history; after a squash merge they aren't, so it refuses. `-D` deletes anyway: compare the contents with `main` first. | Shredding a draft only after confirming the posted entry matches it. |
+| **worktree** | A second working folder for the same repo, with a different branch checked out. A branch open in one worktree can't be switched to in another. | A second copy of the workbook open on another tab, locked to one version. |
 
 </details>
 
@@ -142,5 +144,10 @@ Every symbol and term I've met, with its **real name**, what it does, and what i
 | **raw zone** | Where source files land unchanged. | The untouched source extract. |
 | **grain** | What one row represents ("one row per employee"). | The granularity of a fact table. |
 | **range inversion** | A lower grade paying more than a higher one. | A comp structure red flag. |
+| **thread** | One line of work inside a running program. A web server often gives each request its own thread, so two can run at the same moment. | Two payroll clerks working the same batch at once. |
+| **race condition / lost update** | Two threads read the same old data, change it and write it back; the last write erases the first one's change. | Two people editing the same workbook; whoever saves last wins. |
+| **lock** (`threading.Lock`) | Makes threads take turns: only one may run the locked steps at a time; the others wait. | Checking out a shared file so nobody else can edit it until you check it in. |
+| **golden value** | An expected answer worked out by hand and typed into a test, not recomputed by the same formula. | Tying a report to a control total from another system. |
+| **`on` vs `where` (left join)** | A condition in `on` decides which rows *match*; unmatched rows stay, with NULLs. The same condition in `where` filters *after* the join and drops them. | A Power Query left merge vs filtering the merged column afterwards. |
 
 </details>

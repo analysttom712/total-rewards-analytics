@@ -16,4 +16,4 @@ Topic: $ARGUMENTS (if empty, pick from the sources below).
 5. At the end, give the score (n/5) as a table and list the missed concepts in one line.
 6. Update `docs/REVIEW_QUEUE.md`: move every quizzed concept between boxes per the rules in that file; add new concepts from today's topic at box 1. If `docs/LEARNING_LOG.md` has an entry for today, add the result to its Quiz column (e.g. "/quiz 4/5, missed: range stop"); otherwise hold it for `/wrap`. Don't commit: `/wrap` ships the notes.
 
-Keep it to about 10 minutes. No new concepts: a quiz checks what's been taught.
+Keep it short. No new concepts: a quiz checks what's been taught.

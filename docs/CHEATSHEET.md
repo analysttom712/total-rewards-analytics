@@ -34,6 +34,13 @@ gh pr create --title "..." --body "Closes #N. ..."
 gh pr merge <N> --merge --delete-branch
 ```
 
+**Study site (learning hub):**
+```powershell
+python -m hub                        # start it, then open http://127.0.0.1:8765
+python -m hub --progress             # print the answers and marks I've saved
+```
+Ctrl+C in that terminal stops it. In VS Code: Terminal → Run Task… → Start learning hub.
+
 </details>
 
 ---
@@ -618,6 +625,88 @@ print(df.to_csv(index=False))                       # preview the CSV text
 - Paste into the REPL with **right-click**, not Ctrl+V (`U+0016`).
 - Grey ghost text = AI autocomplete. Press **Esc** during practice.
 - A box marked `text` is a diagram, not a command.
+
+</details>
+
+</details>
+
+<details>
+<summary><b>Review 1 · Nov 25 · PR reviews (#30, #31) and a fix (#33)</b></summary>
+
+<details>
+<summary>Look at a PR before merging</summary>
+
+```powershell
+gh pr view 30                                  # description, linked issue
+gh pr diff 30                                  # every changed line
+gh pr checks 30                                # did CI pass?
+git fetch                                      # get GitHub's latest first
+python scripts/public_scan.py --base origin/main   # the same scan CI runs
+```
+
+Then run `/review` in a **new chat**, so the review isn't done by the chat that built the code.
+
+</details>
+
+<details>
+<summary>A fix found after the PR merged</summary>
+
+```powershell
+git switch -c fix/short-name origin/main       # new branch from the latest main; uncommitted edits come along
+git add path/one.py path/two.py                # name the files
+git commit -m "What the fix does"
+git push -u origin fix/short-name
+gh pr create --base main --title "..." --body "..."
+```
+
+- The old PR is closed. Commits on its branch won't reach `main`.
+- `switch -c` refuses if `main` changed the same files. That's Git protecting your edits.
+
+</details>
+
+<details>
+<summary>Delete a branch after a squash merge</summary>
+
+```powershell
+git diff fix/short-name origin/main -- path/one.py   # nothing printed = main has it all
+git branch -D fix/short-name                         # -d would refuse after a squash
+git push origin --delete fix/short-name              # the GitHub copy
+```
+
+</details>
+
+<details>
+<summary>Worktrees</summary>
+
+```powershell
+git worktree list                              # every working folder and its branch
+cd <worktree folder>                           # commit a worktree's branch from inside it
+```
+
+A branch checked out in a worktree can't be switched to anywhere else.
+
+</details>
+
+<details>
+<summary>Left join: on vs where</summary>
+
+```sql
+-- keeps all employees; no match = NULL department
+from employees as e
+left join hr_assignment as a
+    on a.employee_id = e.employee_id
+   and date '2026-06-30' between a.effective_start and a.effective_end
+```
+
+The same date check in `where` drops the unmatched employees, so the left join acts like an inner join.
+
+</details>
+
+<details>
+<summary>Gotchas</summary>
+
+- Two saves at once can erase each other (a race). A lock makes them take turns.
+- Before deleting a branch, check its PR is merged **and** its contents are on `main`.
 
 </details>
 
