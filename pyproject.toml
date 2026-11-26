@@ -1,0 +1,4 @@
+[tool.pytest.ini_options]
+# Let tests import the generator's modules by name (from hello_employee import ...).
+pythonpath = ["generator"]
+testpaths = ["tests"]

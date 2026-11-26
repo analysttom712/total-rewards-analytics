@@ -6,8 +6,16 @@ import pandas as pd
 from faker import Faker
 from job_catalog import JOBS
 
-Faker.seed(42)
 fake = Faker()
+
+
+def build_employees(count: int) -> list:
+    """Build 'count' fake employees, starting from the same seed everytime"""
+    Faker.seed(42)
+    employees = []
+    for employee_id in range(100001, 100001 + count):
+        employees.append(make_employee(employee_id))
+    return employees
 
 
 def make_employee(employee_id: int) -> dict:
@@ -30,13 +38,17 @@ def make_employee(employee_id: int) -> dict:
     }
 
 
-employees = []
-for employee_id in range(100001, 100026):
-    employees.append(make_employee(employee_id))
-df = pd.DataFrame(employees)
-df["hire_date"] = pd.to_datetime(df["hire_date"])
-print(df.head())
-print(df.shape)
-print(df.dtypes)
-Path("data/raw").mkdir(parents=True, exist_ok=True)
-df.to_csv("data/raw/employees.csv", index=False)
+def main() -> None:
+    """Generate the employees, show a preview and write the CSV."""
+    employees = build_employees(25)
+    df = pd.DataFrame(employees)
+    df["hire_date"] = pd.to_datetime(df["hire_date"])
+    print(df.head())
+    print(df.shape)
+    print(df.dtypes)
+    Path("data/raw").mkdir(parents=True, exist_ok=True)
+    df.to_csv("data/raw/employees.csv", index=False)
+
+
+if __name__ == "__main__":
+    main()
