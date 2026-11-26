@@ -8,6 +8,7 @@ Wrap up today's session.
 3. **Public-repo safety check** (CLAUDE.md 2a): `scripts/public_scan.py` runs on every commit and covers secrets, AWS IDs, home-folder paths and blocklisted names. Review `git status` and `git diff --staged` for what it can't judge: real people's names, real-looking data, and personal details in screenshots. Flag anything found before committing.
 4. Thomas commits with a clear message, pushes, and opens a PR with `gh pr create` that links the issue (`Closes #N` in the **body**). Review the diff like a senior teammate; Thomas merges.
 5. Append to `docs/LEARNING_LOG.md`: date · day number · ticket · concept · what shipped · quiz score · blockers · next ticket.
+   - **Every session, update the `## Status` section of `README.md`:** the day number and phase, a short list of what's built and passing on `main` (merged work only, per hard rule 4), and the next ticket. Write it before Thomas commits the wrap notes, so it ships in the same PR.
 6. Update `docs/SKILLS_MATRIX.md` ratings that changed (0–4), with a one-line reason. Add an ADR to `docs/DECISIONS.md` if a design choice was made.
 7. **Learning loop** (the part that makes the next session better):
    - `docs/REVIEW_QUEUE.md`: add every concept taught today (box 1, due next session). Move quizzed items between boxes using the rules at the top of the file. Retire box-5 hits.
