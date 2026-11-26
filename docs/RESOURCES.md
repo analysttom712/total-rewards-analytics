@@ -52,7 +52,9 @@ Curated links by topic. `/standup` picks 2–3 for the day's concept; add new on
 <summary><b>Tools</b></summary>
 
 - [Ruff docs](https://docs.astral.sh/ruff/): rule codes (search "F401", "I001").
-- [pytest: Get started](https://docs.pytest.org/en/stable/getting-started.html): next ticket (#9).
+- [pytest: Get started](https://docs.pytest.org/en/stable/getting-started.html): first tests (#9).
+- [pytest: How to write and report assertions](https://docs.pytest.org/en/stable/how-to/assert.html): what pytest prints when an `assert` fails.
+- [Python tutorial: sets](https://docs.python.org/3/tutorial/datastructures.html#sets): distinct values; the first two paragraphs are enough.
 - [Faker docs](https://faker.readthedocs.io/)
 - [VS Code docs](https://code.visualstudio.com/docs)
 

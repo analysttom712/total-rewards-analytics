@@ -26,7 +26,7 @@ Each build step gives:
 - **Where it goes:**
   1. **File:** the full path, plus "check the tab says `<name>`".
   2. **Spot:** the existing line(s) it goes after, before or replaces, quoted word for word. Never line numbers.
-  3. **Action:** insert, replace or delete.
+  3. **Action:** insert, replace or delete. For a replace, name the exact characters that change (`+ 50000` goes after `job_row["salary_max"]`, inside the `)`). Wrong-spot pastes happened on Days 3 and 5.
   4. **Indent:** how many spaces (0 = top level, 4 = inside a function, 8 = inside a loop in a function).
   5. **Before → after:** a short `text` box showing the spot as it is now and as it should look, with 1–2 lines of context.
 - **Check:** how I'll know it worked.
@@ -36,7 +36,7 @@ Each build step gives:
 ## 3. Before acting or reviewing
 
 - **Verify state first:** which file I'm editing, `git status`, whether the PR is merged. Do this before deleting, reviewing or giving the next step.
-- **Read the disk, not my pastes.** Claude reads files and runs read-only checks itself. I paste only the output of something I just ran. On the first odd or repeated paste, check the file on disk.
+- **Read the disk, not my pastes.** Claude reads files and runs read-only checks itself. I paste only the output of something I just ran, and I label a guess as "predicted", never as output. On the first odd or repeated paste, check the file on disk. An editor tab with a white dot isn't on disk yet: Git, pytest and Claude can't see it.
 - **Handle known risks at standup,** not mid-build. Example: AI inline suggestions stay off for learning-objective code (set in `.vscode/settings.json`).
 
 ## 4. Errors
@@ -47,6 +47,7 @@ Each build step gives:
 ## 5. What makes things stick
 
 - **Predict before running.** "What will `jobs[3]` return?", then run it and compare.
+- **Break it on purpose, then read it.** Seeing my own test fail made it real. The tutor simulates the planted bug in scratch first: it must change only one side of the check (the code, not the rule), or the test can't fail.
 - **Run it and spot-check:** count, first row, last row.
 - **Map generic examples to today's task.** Never jump from an example straight to the real task without connecting them.
 - **Do Git on real work.** Staging, unstaging and committing real files made the four states stick.
@@ -84,6 +85,8 @@ One row per session (filled in by `/wrap`). Keep the last 10 rows; at sprint rev
 | 2026-11-24 | 003 | 17% (wrap) · 50% (/quiz) | partial code | ~2 / ~7 | Naming (list vs loop var vs row); range stop |
 | 2026-11-24 | 003 review | 70% (/quiz 3.5/5) | partial code (premium loop) | 4 / 4 | Predictions strong; typed into the wrong file, autocomplete took over |
 | 2026-11-25 | Review 1 | 100% (wrap 3/3) | none (review session, no build) | 0 / 0 | Reviewed PRs #30, #31; shipped fix PR #33. Explained a race, a squash merge and `on` vs `where` in his own words |
+| 2026-11-25 | 004 | not run | partial code | not recorded | Felt lost; ladder too fast. Wrapped late, from commits |
+| 2026-11-26 | 005 | 50% (/quiz 2.5/5) | partial code (`assert` line of test 3) | 3 / 1 | Shipped #9. Test 3 took 4 tries; read KeyError, ValueError and the assert numbers himself. One prediction reported as output; one wrong-spot paste |
 
 Days 1–3 error counts are estimates (`~`); counted exactly from Day 4.
 
@@ -98,7 +101,7 @@ Hint rungs: **nudge** → **bigger hint** → **partial code**.
 - A concept missed 3 times → its own mini-ticket (see `docs/REVIEW_QUEUE.md`).
 - Errors I read myself goes up → hand me error reading first, before any hint.
 
-**Current status (after Review 1, 2026-11-25):** last 3 rows average 73% on quiz (50%, 70%, 100%), so neither quiz rule fires. Rule 1 stays in effect from earlier sessions, because both build sessions in the window reached partial code. Today's 100% was a quiz with no build, so it doesn't count toward the stretch rule. Keep holding the ladder (Day 4 retro). Judge again after Day 5, the first build session with the slower ladder.
+**Current status (after Day 5, 2026-11-26):** last 3 rows are Review 1 (100%, no build), Day 4 (no quiz) and Day 5 (50%). **Rule 1 fires:** Day 5's quiz is under 60%, and both build sessions reached partial code. So #19 stays one small ticket with a worked example before each step, and #14 splits if #19 runs long. **Rule 3 fired:** `Closes #N` at 4 misses → mini-ticket #36. **Rule 4 applies:** errors read alone rose to 3, so keep handing over error reading first. The slower ladder helped: Day 5 hit partial code on one line, not every step.
 
 ## 9. Retro log
 
@@ -110,3 +113,4 @@ Two lines per session: what clicked, what to change. Newest at the bottom. Keep 
 - **2026-11-24 (Day 3 review):** Clicked: Git states by doing them on real files; `print` vs `return`; predicting errors before running. Change: confirm which file I'm editing; practice in the REPL or a scratch file; inline suggestions off.
 - **2026-11-25 (Day 4):** I felt lost ("a copy-paste battlefield"). Tutor self-review found 8 mistakes: hint ladder too fast, stale line numbers, reviewing old pastes, late risk fixes, skipped lesson block, guessing errors, dense messages, acting before checking. All folded into sections 1–4 above.
 - **2026-11-25 (Review 1):** Clicked: "what order does this run in?" explained the race, the squash merge and `on` vs `where`; reviewing a PR from its findings instead of reading every line. Change: hint ladders written ahead of time keep partial code folded shut (now in section 2); a fix found after a merge goes on its own branch.
+- **2026-11-26 (Day 5):** Clicked: `DISTINCTCOUNT = COUNTROWS` for `set`; watching my own test fail on a planted bug, then writing the failure as a sentence for the PR. Change: the tutor checks a planted bug can actually fail the test before giving it (it didn't the first time); I label predictions as predictions; name the exact characters in a replace.
