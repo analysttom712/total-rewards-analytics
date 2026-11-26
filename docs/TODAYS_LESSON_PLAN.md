@@ -150,10 +150,12 @@ From `docs/REVIEW_QUEUE.md`: `return` vs `print` (3 misses, mini-ticket #20), li
 <details>
 <summary>✅ Done when</summary>
 
-- [ ] `python -m pytest tests/test_generator.py` → `3 passed`
-- [ ] You saw test 3 fail on purpose and wrote down what it said
-- [ ] `ruff check` clean
-- [ ] PR open with `Closes #9`; `/review` run in a new chat; merged
+- [x] `python -m pytest tests/test_generator.py` → `3 passed`
+- [x] You saw test 3 fail on purpose and wrote down what it said (`assert 155302 <= 125000`)
+- [x] `ruff check` clean
+- [x] PR #35 opened with `Closes #9` and merged; #9 closed
+
+**Status (wrap, Nov 26):** done. Step 3 as written above can't fail the test: the generator draws salaries from the same catalog band, so raising `salary_min` moves both sides. The break used was a code bug, `max_value=job_row["salary_max"] + 50000`.
 
 </details>
 
@@ -162,7 +164,7 @@ From `docs/REVIEW_QUEUE.md`: `return` vs `print` (3 misses, mini-ticket #20), li
 ---
 
 <details>
-<summary><b>NEXT · Thu Nov 26 · Day 6 · Issue #19: run the generator as of a fixed date</b></summary>
+<summary><b>NEXT · Fri Nov 27 · Day 6 · Issue #19: run the generator as of a fixed date</b></summary>
 
 <details>
 <summary>🎯 Goal and why it matters</summary>
@@ -170,6 +172,8 @@ From `docs/REVIEW_QUEUE.md`: `return` vs `print` (3 misses, mini-ticket #20), li
 The manager re-ran the employee file two days apart and some hire dates moved. The cause: `end_date="today"` in `make_employee`. Today you make the generator run **as of** a fixed date, so the file is byte-identical no matter when it's run, and pin it with a golden-value test.
 
 Every report you sign off on is run "as of" a period end. This is the first step toward effective dating and as-of joins in Phase 2.
+
+**Pace (adjustment rule 1 from Day 5):** one worked example before each build step; error reading first, before any hint. Fit #36 (`Closes #N` drill, 10 min) into the standup block. If #19 runs long, Day 7's #14 splits in two.
 
 </details>
 
@@ -251,7 +255,7 @@ AS_OF = date(2026, 11, 1)
 
 
 <details>
-<summary><b>NEXT +1 · Fri Nov 27 · Day 7 · Issue #14: make the generator a package (<code>python -m generator</code>)</b></summary>
+<summary><b>NEXT +1 · Sat Nov 28 · Day 7 · Issue #14: make the generator a package (<code>python -m generator</code>)</b></summary>
 
 <details>
 <summary>🎯 Goal and why it matters</summary>

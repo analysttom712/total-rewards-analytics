@@ -711,3 +711,77 @@ The same date check in `where` drops the unmatched employees, so the left join a
 </details>
 
 </details>
+
+<details>
+<summary><b>Day 4–5 · Nov 25–26 · #9 first pytest (PR #35)</b></summary>
+
+<details>
+<summary>Run the tests</summary>
+
+```powershell
+python -m pytest tests/test_generator.py     # just the generator tests
+python -m pytest                             # the whole suite
+```
+
+- `.` = passed, `F` = failed, `s` = skipped.
+- Read a failure bottom-up: the `E` lines say what was wrong, the `>` line says where.
+
+</details>
+
+<details>
+<summary>Three test patterns</summary>
+
+```python
+# 1. Same seed, same output
+assert build_employees(25) == build_employees(25)
+
+# 2. No duplicate IDs (DISTINCTCOUNT = COUNTROWS)
+ids = []
+for e in employees:
+    ids.append(e["employee_id"])
+assert len(ids) == len(set(ids))
+
+# 3. Every salary inside its band (join on job_code, then BETWEEN)
+for e in employees:
+    for job in JOBS:
+        if job["job_code"] == e["job_code"]:
+            assert job["salary_min"] <= e["salary"] <= job["salary_max"]
+```
+
+</details>
+
+<details>
+<summary>Prove a test can fail</summary>
+
+1. Plant a bug in the **code** (not the rule it's checked against): e.g. `max_value=job_row["salary_max"] + 50000`.
+2. Predict the failure, run pytest, read the `E` line.
+3. `git restore generator/hello_employee.py`, rerun, back to passed.
+
+If the `assert` sits inside an `if` that never matches, the test passes having checked nothing.
+
+</details>
+
+<details>
+<summary>Fix the last commit, push, open the PR</summary>
+
+```powershell
+git commit --amend -m "Better message"       # new commit ID; only before pushing
+git push                                     # plain push works once -u linked the branch
+gh pr create --title "..." --body "Closes #9. ..."
+```
+
+`Closes #9` closes the issue when the PR **merges** into `main`, not when it opens.
+
+</details>
+
+<details>
+<summary>Gotchas</summary>
+
+- A white dot on an editor tab = unsaved. Git can't see it. Close the tab and choose **Don't Save** to drop it.
+- Saved by mistake? `git status` shows `modified`; `git restore <file>` puts the committed version back.
+- `>>` in PowerShell = an unclosed quote. Ctrl+C, then re-type the line (Up-arrow brings back the broken one).
+- A stray trailing comma turns a value into a tuple → `ValueError: not enough values to unpack`.
+
+</details>
+
+</details>

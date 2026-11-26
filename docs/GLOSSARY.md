@@ -25,6 +25,9 @@ Every symbol and term I've met, with its **real name**, what it does, and what i
 | `>>>` / `...` | **REPL prompt** / **continuation prompt** | `>>>` waits for a new line of Python. `...` means "this block isn't finished": press Enter on an empty `...` line to run it. | A formula bar waiting for Enter. |
 | `x = f(...)` vs `f(...)` | **assignment** vs **call** | `annual_premium = (...)` *stores* a value under that name; `annual_premium(monthly)` *runs* the function. Inside `append( )` you want the call. | Naming a step vs invoking a function. |
 | `:=` | **walrus operator** (assignment expression) | Assigns *and* returns a value in one go. Seen once from autocomplete; not needed yet. | — |
+| `a <= b <= c` | **chained comparison** | `True` only when `b` is between `a` and `c`, ends included. `100000 <= 104572 <= 125000` → `True`. | SQL `BETWEEN`; "is this salary inside the band?" |
+| `assert` | **assert statement** | `assert <something true>`: does nothing if it's `True`, stops with `AssertionError` if it's `False`. The check inside every pytest test. | A tie-out that must equal zero, or the recon fails. |
+| `x,` (stray) | **accidental tuple** | A trailing comma after a single value makes a tuple (a fixed list): `d = date(...),` stores `(date,)`, not a date. | — |
 
 </details>
 
@@ -59,6 +62,14 @@ Every symbol and term I've met, with its **real name**, what it does, and what i
 | **`TypeError`** | The wrong **kind** of value for the operation (`jobs["grade"]`: a list needs a number, not text). | Text in a numeric column. |
 | **seed** | A starting number that makes "random" output repeat exactly. | A saved filter state you can reapply. |
 | **deterministic** | Same input → same output, every time. | A refresh that always ties out. |
+| **`set`** | A collection that keeps only **distinct** values, in no order: `set([1, 2, 2])` → `{1, 2}`. | Power Query *Remove Duplicates*; DAX `DISTINCT`. |
+| **`len()`** | **length**: how many items are in a list, set or dict. | `COUNTROWS`. |
+| **uniqueness check** | `len(set(ids)) == len(ids)`: a duplicate makes the set shorter, so the check fails. | `DISTINCTCOUNT(id) = COUNTROWS(table)`. |
+| **main guard** (`if __name__ == "__main__":`) | Code under it runs only when the file is run directly, not when it's imported. | A refresh button that only fires when you click it, not when another report references the query. |
+| **import side effect** | Code at the top level of a module runs the moment the module is imported. | Opening a workbook that runs a macro on open. |
+| **pytest** | The test runner: finds files named `test_*.py` and functions named `test_*`, runs them and reports passed / failed. | Running every recon check in the close checklist in one click. |
+| **false pass** | A test that passes without checking anything, e.g. an `assert` inside an `if` that never matches. "Passed" checked nobody. | A Merge that matched zero rows: an empty exceptions tab that looks like a clean tie-out. |
+| **break it on purpose** | Plant a bug to see the test fail, then remove it. The bug must change **only one side** of the check (the code, not the rule it's checked against). | Keying a test exception to prove the recon catches it. |
 
 </details>
 
@@ -100,7 +111,7 @@ Every symbol and term I've met, with its **real name**, what it does, and what i
 | **closing keyword** | `Closes #12` in the PR body: closes issue 12 when the PR merges into the default branch. Also `Fixes`, `Resolves`. | A payment referencing an invoice number clears that invoice. |
 | **`.gitignore`** | List of files Git should never track (venv, secrets, generated data). | An exclusion list. |
 | **`.gitkeep`** | Empty placeholder file so Git tracks an empty folder (Git ignores empty folders). | — |
-| **amend** | Rewrite the last commit (only before pushing). | Correcting an unposted entry. |
+| **amend** (`git commit --amend`) | Replace the last commit with a corrected one (new message or files). It gets a **new commit ID**, so only amend before pushing. | Correcting an unposted entry: it gets a new entry number. |
 | **`git restore`** | Throw away uncommitted edits to a file; back to the last commit. | Undo to last save. |
 | **`git restore --staged`** | Take a file **out of the batch** (unstage). Edits are kept. | Pulling a timecard out of the approval batch. |
 | **staged + modified** | `git add` takes a **snapshot**; edit again and the file shows in both sections. `git add` again to update. | The batch holds the old timecard after the employee corrects hours. |
@@ -131,6 +142,8 @@ Every symbol and term I've met, with its **real name**, what it does, and what i
 | **LF / CRLF** | Invisible end-of-line characters: LF (Linux/Mac) vs CRLF (Windows). Git's warning about converting them is harmless. | `2026-11-24` vs `11/24/2026`: same date, different format. |
 | **`U+0016`** | The invisible code Ctrl+V sends. Some REPLs take it as text → `SyntaxError`. Paste with right-click instead. | — |
 | **inline suggestions** | VS Code's AI autocomplete (grey ghost text, Tab accepts). Turn off for practice. | Autofill guessing the wrong formula. |
+| **unsaved changes** (white dot on a tab) | Edits that exist only in the editor, not on disk. Git and pytest can't see them. Close the tab and choose **Don't Save** to drop them; once saved, use `git restore`. | Power Query edits you haven't clicked *Close & Apply* on. |
+| **`>>` prompt** (PowerShell) | **continuation prompt**: PowerShell thinks the command isn't finished, usually an unclosed quote. Ctrl+C cancels. | A formula bar waiting for the closing bracket. |
 
 </details>
 
