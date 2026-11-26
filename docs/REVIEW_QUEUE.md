@@ -22,7 +22,7 @@ Rules: ask due items oldest-first, misses before new items, at most 3 review que
 | `Closes #N`: exact form (`Closes #12`), goes in the PR body, closes on merge | 2 | 2026-11-24 | ✓ | 3 | 2026-11-26 | Day 1–3 | |
 | `object` / `str` dtype (text, pandas 3 says `str`); `pd.to_datetime` = "Changed Type" | 2 | 2026-11-24 | ✓ | 1 | 2026-11-26 | Day 3 | |
 | `to_csv(index=False)`: why (no junk index column) | 2 | 2026-11-24 | ✓ | 1 | 2026-11-26 | Day 3 | |
-| `return`: Python needs it, R doesn't; `print` shows, `return` hands back (else `None`) | 1 | 2026-11-24 | ½ | 3 | 2026-11-25 | Day 3 + review | Predict the output: a function's only line is `print(5)`. You run `x = f()`. What shows on screen, and what is in `x`? |
+| `return`: Python needs it, R doesn't; `print` shows, `return` hands back (else `None`) | 1 | 2026-11-25 | ½ | 4 | 2026-11-26 | Day 3 + review | Predict the output: a function's only line is `print(5)`. You run `x = f()`. What shows on screen, and what is in `x`? |
 | List by position `[0]` vs dict by name `["name"]` (position ≠ value inside) | 1 | 2026-11-24 | ½ | 1 | 2026-11-25 | Day 3 + review | |
 | `git switch` (go to) vs `git switch -c` (create) | 2 | 2026-11-24 | ✓ | 1 | 2026-11-26 | Day 2 | |
 | `.gitkeep` = lets Git track an empty folder | 2 | 2026-11-24 | ✓ | 1 | 2026-11-26 | Day 1 | |
