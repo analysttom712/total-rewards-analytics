@@ -14,6 +14,6 @@ Topic: $ARGUMENTS (if empty, pick from the sources below).
 3. Ask **one question at a time**. Wait for his answer before showing the next one. Never put the answer in the question. If he asks for something else mid-quiz, do it, then resume at the same question.
 4. After each answer: mark ✓ / ½ / ✗ (½ if any part of a multi-part question is missing), then give a 1–3 line explanation. For anything ½ or ✗, show the smallest example that makes it click, tied to Power Query, DAX, R or his payroll and benefits background.
 5. At the end, give the score (n/5) as a table and list the missed concepts in one line.
-6. Update `docs/REVIEW_QUEUE.md`: move every quizzed concept between boxes per the rules in that file; add new concepts from today's topic at box 1. If `docs/LEARNING_LOG.md` has an entry for today, add the result to its Quiz column (e.g. "/quiz 4/5, missed: range stop"); otherwise hold it for `/wrap`. Don't commit: `/wrap` ships the notes.
+6. Update `docs/REVIEW_QUEUE.md` per the rules at the top of that file: move each quizzed concept that already has a row, once (skip one `/standup` already moved today). Don't add rows: `/wrap` adds a row for any quizzed concept that has none yet. Record the result where `/wrap` will find it: the Quiz column of today's `docs/LEARNING_LOG.md` entry if there is one (e.g. "/quiz 4/5, missed: range stop; new: f-strings ✓"), otherwise in your reply so `/wrap` can use it. Don't commit: `/wrap` ships the notes.
 
 Keep it short. No new concepts: a quiz checks what's been taught.
