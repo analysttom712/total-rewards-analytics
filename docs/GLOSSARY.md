@@ -162,5 +162,13 @@ Every symbol and term I've met, with its **real name**, what it does, and what i
 | **lock** (`threading.Lock`) | Makes threads take turns: only one may run the locked steps at a time; the others wait. | Checking out a shared file so nobody else can edit it until you check it in. |
 | **golden value** | An expected answer worked out by hand and typed into a test, not recomputed by the same formula. | Tying a report to a control total from another system. |
 | **`on` vs `where` (left join)** | A condition in `on` decides which rows *match*; unmatched rows stay, with NULLs. The same condition in `where` filters *after* the join and drops them. | A Power Query left merge vs filtering the merged column afterwards. |
+| **constant** (`AS_OF`, `JOBS`) | A name set once at the top of a module and never reassigned. `ALL_CAPS` is a promise to the reader; Python doesn't enforce it. | The "Period end" parameter on a report's cover page: change it in one place and the whole report follows. |
+| **`datetime.date`** (`date(2026, 11, 1)`) | A real calendar date value from the built-in `datetime` module, built as year, month, day. `date(2026, 31, 12)` raises `ValueError: month must be in 1..12`. | Power Query `#date(2026, 11, 1)`: a date value, not the text "2026-11-01". |
+| **as-of date** | The fixed date a dataset or report is run for. Nothing reads today's clock. | A payroll register run "as of 10/31", which ties out no matter when it's re-run. |
+| **file hash** (`Get-FileHash`, SHA-256) | A 64-character fingerprint of a file's exact bytes. One changed character gives a completely different hash. | A control total that's sensitive to every comma, not just the amounts. |
+| **slice** (`items[1:25]`) | Takes a range of positions and returns a **list**, even if it's empty. `items[0]` returns one item. | Filtering a table to rows 2–25 vs picking one row. |
+| **`timedelta`** (`timedelta(days=1)`) | A length of time you can add to a date. `date + 1` is a `TypeError`. | Adding "30 days" to an effective date, not just the number 30. |
+| **`ModuleNotFoundError`** | Python can't find a package. If the package is installed, usually the venv isn't active. | Opening a report on a machine without the connector installed. |
+| **`NameError`** | Python looked for a variable with that name and found none. Often means missing quotes: `first[hire_date]` vs `first["hire_date"]`. | A DAX measure referencing a column that doesn't exist. |
 
 </details>
