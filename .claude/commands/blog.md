@@ -1,7 +1,7 @@
 ---
 description: Draft today's build-in-public post (portfolio + LinkedIn versions)
 ---
-Draft today's post from the latest LEARNING_LOG entry, the merged PR and today's quiz.
+Draft today's post from the latest LEARNING_LOG entry, the session's PR (usually still open when `/wrap` runs) and today's quiz. Describe only work that is built and passing.
 
 Write `docs/blog/YYYY-MM-DD-day-NNN.md` with two sections:
 

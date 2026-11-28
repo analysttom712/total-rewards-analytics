@@ -1,6 +1,6 @@
 # Review Queue
 
-Spaced repetition for every concept I've been taught. `/standup` and `/quiz` ask what's **due**; `/wrap` and `/quiz` move items between boxes.
+Spaced repetition for every concept I've been taught. `/standup`, `/quiz` and `/wrap` ask questions, and each moves only the items it asked, at most once per item per day. Only `/wrap` adds rows.
 
 **How the boxes work**
 
@@ -12,7 +12,7 @@ Spaced repetition for every concept I've been taught. `/standup` and `/quiz` ask
 | 4 | 7 days | ✓ → box 5 | ✗ or ½ → box 1 |
 | 5 | 14 days | ✓ → **retired** (move to the bottom table) | ✗ or ½ → box 1 |
 
-Rules: ask due items oldest-first, misses before new items, at most 3 review questions per session outside `/quiz`. A concept that hits ✗ three times gets its own mini-ticket.
+Rules: ask due items oldest-first, misses before new items, at most 3 review questions per session outside `/quiz`. **Misses** counts every ✗ and ½. When it reaches 3, the concept gets its own mini-ticket (`/standup` drafts it).
 
 ## Active
 
