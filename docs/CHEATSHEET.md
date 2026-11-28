@@ -785,3 +785,75 @@ gh pr create --title "..." --body "Closes #9. ..."
 </details>
 
 </details>
+
+<details>
+<summary><b>Day 6 · Nov 28 · #19 run the generator as of a fixed date (PR #46)</b></summary>
+
+<details>
+<summary>Before anything: venv on, file saved</summary>
+
+```powershell
+.venv\Scripts\Activate.ps1      # the prompt starts with (.venv)
+```
+
+- `ModuleNotFoundError: No module named 'faker'` = the venv is off, not a code bug.
+- A white dot on a tab = unsaved. Ctrl+S before every terminal command.
+
+</details>
+
+<details>
+<summary>Pin a date window with constants</summary>
+
+```python
+from datetime import date                # built-in: import group 1
+
+AS_OF = date(2026, 11, 1)                # year, month, day
+EARLIEST_HIRE = date(2016, 11, 1)
+
+hire_date = fake.date_between(start_date=EARLIEST_HIRE, end_date=AS_OF)   # names, no quotes
+```
+
+- `"AS_OF"` in quotes is a string literal (the text), so Faker raises `ParseError`.
+- Faker's date = window **start** + a seeded offset. A sliding start moves every date.
+
+</details>
+
+<details>
+<summary>Golden-value test</summary>
+
+```python
+def test_first_hire_date_is_pinned():
+    first = build_employees(1)[0]                    # position 0 of the list = one dict
+    assert first["hire_date"] == date(2020, 8, 18)   # key in quotes; date typed by hand
+```
+
+- `[1:25]` is a slice: it returns a list, not a dict.
+- Break it on purpose by changing the **code**: `start_date="-10y"` gives `2020-09-13 != 2020-08-18`.
+
+</details>
+
+<details>
+<summary>Prove the file didn't change</summary>
+
+```powershell
+Get-FileHash data/raw/employees.csv     # same Hash = identical bytes
+```
+
+</details>
+
+<details>
+<summary>Stage by name, fix a message, first push</summary>
+
+```powershell
+git add generator/hello_employee.py tests/test_generator.py   # only the ticket's files
+git status                                                    # check "Changes to be committed"
+git commit --amend -m "Fixed message"                         # before pushing only; new commit ID
+git push -u origin 19-as-of-date                              # first push links the branch
+gh pr checks 46                                               # did CI pass?
+```
+
+Git prints `[19-as-of-date ebb399b] message` back to you. That bracket isn't part of the message.
+
+</details>
+
+</details>

@@ -55,7 +55,9 @@ Curated links by topic. `/standup` picks 2–3 for the day's concept; add new on
 - [pytest: Get started](https://docs.pytest.org/en/stable/getting-started.html): first tests (#9).
 - [pytest: How to write and report assertions](https://docs.pytest.org/en/stable/how-to/assert.html): what pytest prints when an `assert` fails.
 - [Python tutorial: sets](https://docs.python.org/3/tutorial/datastructures.html#sets): distinct values; the first two paragraphs are enough.
-- [Faker docs](https://faker.readthedocs.io/)
+- [Faker docs](https://faker.readthedocs.io/): search the site for `date_between` (the old direct link to the date_time provider page now returns 404).
+- [Python docs: `datetime`](https://docs.python.org/3/library/datetime.html): the "date Objects" section, `date(year, month, day)` and `timedelta` (#19).
+- [PowerShell: `Get-FileHash`](https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/get-filehash): the first example; same hash = identical file (#19).
 - [VS Code docs](https://code.visualstudio.com/docs)
 
 </details>

@@ -29,15 +29,15 @@ Each build step gives:
   3. **Action:** insert, replace or delete. For a replace, name the exact characters that change (`+ 50000` goes after `job_row["salary_max"]`, inside the `)`). Wrong-spot pastes happened on Days 3 and 5.
   4. **Indent:** how many spaces (0 = top level, 4 = inside a function, 8 = inside a loop in a function).
   5. **Before → after:** a short `text` box showing the spot as it is now and as it should look, with 1–2 lines of context.
-- **Check:** how I'll know it worked.
+- **Check:** how I'll know it worked. When the check is something a tool prints back, label it "git prints:" or "you'll see:" in its own box, never next to a fill-in (Day 6: git's `[branch id]` echo got typed into a commit message).
 
 **Hint ladder: one rung per real attempt.** Nudge (a question or the parts list) → bigger hint, only after an attempt → partial code, last. Skeletons with one blank count as partial code. When I'm stuck after a try, the next hint narrows one clue; the full line comes last. Ladders written ahead in a doc keep partial code inside a closed `<details>`, so reading ahead takes a deliberate click.
 
 ## 3. Before acting or reviewing
 
-- **Verify state first:** which file I'm editing, `git status`, whether the PR is merged. Do this before deleting, reviewing or giving the next step.
-- **Read the disk, not my pastes.** Claude reads files and runs read-only checks itself. I paste only the output of something I just ran, and I label a guess as "predicted", never as output. On the first odd or repeated paste, check the file on disk. An editor tab with a white dot isn't on disk yet: Git, pytest and Claude can't see it.
-- **Handle known risks at standup,** not mid-build. Example: AI inline suggestions stay off for learning-objective code (set in `.vscode/settings.json`).
+- **Verify state first:** which file I'm editing, `git status`, whether the PR is merged, and whether **CI** passed (`gh pr checks`). Do this before deleting, reviewing, calling something shipped or giving the next step. Day 6 passed on Windows and failed on Linux CI.
+- **Read the disk, not my pastes.** Claude reads files and runs read-only checks itself. I paste only the output of something I just ran, and I label a guess as "predicted", never as output. If I paste the command or the code instead of its output (4 times on Day 6), the tutor checks the disk and asks for the output. On the first odd or repeated paste, check the file on disk. An editor tab with a white dot isn't on disk yet: Git, pytest and Claude can't see it.
+- **Handle known risks at standup,** not mid-build: AI inline suggestions off (`.vscode/settings.json`); the venv active (`(.venv)` in the prompt, or `.venv\Scripts\Activate.ps1`); Ctrl+S before every terminal command (or File → Auto Save, my call).
 
 ## 4. Errors
 
@@ -46,8 +46,8 @@ Each build step gives:
 
 ## 5. What makes things stick
 
-- **Predict before running.** "What will `jobs[3]` return?", then run it and compare.
-- **Break it on purpose, then read it.** Seeing my own test fail made it real. The tutor simulates the planted bug in scratch first: it must change only one side of the check (the code, not the rule), or the test can't fail.
+- **Predict before running.** "What will `jobs[3]` return?", then run it and compare. Ask for the prediction in its own message, before the command is given. Tucked into a step's Check, it got skipped on most steps on Day 6.
+- **Break it on purpose, then read it.** Seeing my own test fail made it real. The tutor simulates **the exact planted bug it hands over** in scratch first, not a similar one. It must change only one side of the check (the code, not the rule), or the test can't fail. Day 6: the tutor tested "both ends slide" and then handed over "only the end slides", which couldn't fail.
 - **Run it and spot-check:** count, first row, last row.
 - **Map generic examples to today's task.** Never jump from an example straight to the real task without connecting them.
 - **Do Git on real work.** Staging, unstaging and committing real files made the four states stick.
@@ -87,6 +87,7 @@ One row per session (filled in by `/wrap`). Keep the last 10 rows; at sprint rev
 | 2026-11-25 | Review 1 | 100% (wrap 3/3) | none (review session, no build) | 0 / 0 | Reviewed PRs #30, #31; shipped fix PR #33. Explained a race, a squash merge and `on` vs `where` in his own words |
 | 2026-11-25 | 004 | not run | partial code | not recorded | Felt lost; ladder too fast. Wrapped late, from commits |
 | 2026-11-26 | 005 | 50% (/quiz 2.5/5) | partial code (`assert` line of test 3) | 3 / 1 | Shipped #9. Test 3 took 4 tries; read KeyError, ValueError and the assert numbers himself. One prediction reported as output; one wrong-spot paste |
+| 2026-11-28 | 006 | 90% (/quiz 4.5/5) | bigger hint (test key and golden date) | 1 / 1 (+2 fixed without reading: `I001`, `ValueError`) | PR #46 open, CI red on Linux. Built a termination date ahead of the ticket, then removed it. `Closes #19` with no hint. Skipped most predictions |
 
 Days 1–3 error counts are estimates (`~`); counted exactly from Day 4.
 
@@ -101,7 +102,7 @@ Hint rungs: **nudge** → **bigger hint** → **partial code**.
 - A concept missed 3 times → its own mini-ticket (see `docs/REVIEW_QUEUE.md`).
 - Errors I read myself goes up → hand me error reading first, before any hint.
 
-**Current status (after Day 5, 2026-11-26):** last 3 rows are Review 1 (100%, no build), Day 4 (no quiz) and Day 5 (50%). **Rule 1 fires:** Day 5's quiz is under 60%, and both build sessions reached partial code. So #19 stays one small ticket with a worked example before each step, and #14 splits if #19 runs long. **Rule 3 fired:** `Closes #N` at 4 misses → mini-ticket #36. **Rule 4 applies:** errors read alone rose to 3, so keep handing over error reading first. The slower ladder helped: Day 5 hit partial code on one line, not every step.
+**Current status (after Day 6, 2026-11-28):** last 3 rows are Day 4 (no quiz), Day 5 (50%) and Day 6 (90%). **None fires.** Quiz average 70% (between 60 and 80); Day 6 topped out at a bigger hint, so rule 1's "most steps needed partial code" no longer holds; rule 2 needs >80% *and* nudge-level steps. Errors read alone went down (3 → 1), so rule 4 doesn't fire, but keep error reading first. Keep one worked example per step for #14. Rule 3: no new concept at 3+ misses. `return` (5) and `Closes #N` (4) already have #20 and #36, and both were ✓ today.
 
 ## 9. Retro log
 
@@ -114,3 +115,4 @@ Two lines per session: what clicked, what to change. Newest at the bottom. Keep 
 - **2026-11-25 (Day 4):** I felt lost ("a copy-paste battlefield"). Tutor self-review found 8 mistakes: hint ladder too fast, stale line numbers, reviewing old pastes, late risk fixes, skipped lesson block, guessing errors, dense messages, acting before checking. All folded into sections 1–4 above.
 - **2026-11-25 (Review 1):** Clicked: "what order does this run in?" explained the race, the squash merge and `on` vs `where`; reviewing a PR from its findings instead of reading every line. Change: hint ladders written ahead of time keep partial code folded shut (now in section 2); a fix found after a merge goes on its own branch.
 - **2026-11-26 (Day 5):** Clicked: `DISTINCTCOUNT = COUNTROWS` for `set`; watching my own test fail on a planted bug, then writing the failure as a sentence for the PR. Change: the tutor checks a planted bug can actually fail the test before giving it (it didn't the first time); I label predictions as predictions; name the exact characters in a replace.
+- **2026-11-28 (Day 6):** Clicked: the window diagram (the start slides, so every date moves); the three-names table for constant vs dict key; staging by name; naming `--amend` himself. Change: the tutor simulates the exact planted bug (it handed over one that couldn't fail); predictions get their own message; checks labelled "git prints:" so they aren't typed in; check CI before calling it shipped.
