@@ -1,3 +1,5 @@
+from datetime import date
+
 from hello_employee import build_employees
 from job_catalog import JOBS
 
@@ -22,3 +24,8 @@ def test_salaries_inside_pay_range():
         for job in JOBS:
             if job["job_code"] == e["job_code"]:
                 assert job["salary_min"] <= e["salary"] <= job["salary_max"]
+
+
+def test_first_hire_date_is_pinned():
+    first = build_employees(1)[0]
+    assert first["hire_date"] == date(2020, 8, 18)

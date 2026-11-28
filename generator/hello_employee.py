@@ -1,10 +1,14 @@
 """Print 25 fake Northwind Mutual employees and create a dataframe for them."""
 
+from datetime import date
 from pathlib import Path
 
 import pandas as pd
 from faker import Faker
 from job_catalog import JOBS
+
+AS_OF = date(2026, 11, 1)
+EARLIEST_HIRE = date(2016, 11, 1)
 
 fake = Faker()
 
@@ -22,7 +26,7 @@ def make_employee(employee_id: int) -> dict:
     """Generate a fake employee record."""
     job_row = fake.random_element(JOBS)
     name = fake.first_name() + " " + fake.last_name()
-    hire_date = fake.date_between(start_date="-10y", end_date="today")
+    hire_date = fake.date_between(start_date=EARLIEST_HIRE, end_date=AS_OF)
     salary = fake.pyint(
         min_value=job_row["salary_min"], max_value=job_row["salary_max"]
     )
